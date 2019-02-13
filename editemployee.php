@@ -16,7 +16,7 @@
 			$row = mysqli_fetch_row($result);
 		?>
         
-        <form action="submitemployeeinfo.php" method="post" onsubmit="return validate(this)">
+        <form action="submitemployeeedit.php?var_name=<?php echo $var; ?>" method="post" onsubmit="return validate(this)">
             <table>
                 <tr><td>Name:</td><td><input type="Text" name="name" value="<?php echo $row[1]; ?>"></td></tr>
                 <tr><td>User Name:</td><td><input type="Text" name="user_name" value="<?php echo $row[2]; ?>"></td></tr>
