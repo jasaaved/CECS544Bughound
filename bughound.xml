@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.8.4
+- https://www.phpmyadmin.net
+-
+- Host: 127.0.0.1
+- Generation Time: Feb 24, 2019 at 04:45 AM
+- Server version: 10.1.37-MariaDB
+- PHP Version: 7.3.1
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="bughound" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="attachment">
+                CREATE TABLE `attachment` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `file_name` text NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="bug_report">
+                CREATE TABLE `bug_report` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `programId` int(11) NOT NULL,
+                  `report_type` enum('Coding Error','Design Issue','Suggestion','Documentation','Hardware','Query') NOT NULL DEFAULT 'Coding Error',
+                  `severity` enum('Minor','Serious','Fatal') NOT NULL,
+                  `problem_summary` text NOT NULL,
+                  `reproducible` tinyint(1) NOT NULL,
+                  `problem` text NOT NULL,
+                  `suggested_fix` text NOT NULL,
+                  `reported_by_employeeId` int(11) NOT NULL,
+                  `reported_date` date NOT NULL,
+                  `attachmentId` int(11) DEFAULT NULL,
+                  `functional_areaId` int(11) DEFAULT NULL,
+                  `assigned_to_employeeId` int(11) DEFAULT NULL,
+                  `comments` text,
+                  `status` enum('Open','Closed','Resolved') NOT NULL DEFAULT 'Open',
+                  `priority` text,
+                  `resolution` enum('Pending','Fixed','Irreproducible','Deferred','As designed','Withdrawn by Reporter','Need more info','Disagree with suggestion','Duplicate') DEFAULT NULL,
+                  `resolution_version` text,
+                  `resolved_by_employeeId` int(11) DEFAULT NULL,
+                  `resolved_date` date DEFAULT NULL,
+                  `tested_by_employeeId` int(11) DEFAULT NULL,
+                  `tested_date` date DEFAULT NULL,
+                  `treat_as_deferred` tinyint(1) DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `programId` (`programId`),
+                  KEY `reported_by_employeeId` (`reported_by_employeeId`),
+                  KEY `attachmentId` (`attachmentId`),
+                  KEY `functional_areaId` (`functional_areaId`),
+                  KEY `assigned_to_employeeId` (`assigned_to_employeeId`),
+                  KEY `resolved_by_employeeId` (`resolved_by_employeeId`),
+                  KEY `tested_by_employeeId` (`tested_by_employeeId`),
+                  CONSTRAINT `bug_report_ibfk_1` FOREIGN KEY (`attachmentId`) REFERENCES `attachment` (`id`),
+                  CONSTRAINT `bug_report_ibfk_2` FOREIGN KEY (`functional_areaId`) REFERENCES `functional_area` (`id`),
+                  CONSTRAINT `bug_report_ibfk_3` FOREIGN KEY (`reported_by_employeeId`) REFERENCES `employee` (`id`),
+                  CONSTRAINT `bug_report_ibfk_4` FOREIGN KEY (`programId`) REFERENCES `program` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="employee">
+                CREATE TABLE `employee` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `name` text NOT NULL,
+                  `user_name` text NOT NULL,
+                  `password` text NOT NULL,
+                  `user_level` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="functional_area">
+                CREATE TABLE `functional_area` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `department_name` text NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="program">
+                CREATE TABLE `program` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `name` text NOT NULL,
+                  `version_number` text NOT NULL,
+                  `release_number` text NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Database: 'bughound'
+    -->
+    <database name="bughound">
+        <!-- Table attachment -->
+        <table name="attachment">
+            <column name="id">1</column>
+            <column name="file_name">example.txt</column>
+        </table>
+        <table name="attachment">
+            <column name="id">2</column>
+            <column name="file_name">secondexample.txt</column>
+        </table>
+        <!-- Table bug_report -->
+        <!-- Table employee -->
+        <table name="employee">
+            <column name="id">1</column>
+            <column name="name">Jonathan Saavedra</column>
+            <column name="user_name">jasaaved</column>
+            <column name="password">password</column>
+            <column name="user_level">5</column>
+        </table>
+        <table name="employee">
+            <column name="id">3</column>
+            <column name="name">Christopher Gutierrez</column>
+            <column name="user_name">cgutierrez992</column>
+            <column name="password">fthch</column>
+            <column name="user_level">4</column>
+        </table>
+        <table name="employee">
+            <column name="id">6</column>
+            <column name="name">Raynaldo Perez</column>
+            <column name="user_name">rperez</column>
+            <column name="password">hello</column>
+            <column name="user_level">6</column>
+        </table>
+        <table name="employee">
+            <column name="id">7</column>
+            <column name="name">hllo there</column>
+            <column name="user_name">hi</column>
+            <column name="password">dyjfyt</column>
+            <column name="user_level">5</column>
+        </table>
+        <table name="employee">
+            <column name="id">8</column>
+            <column name="name">david cowboy</column>
+            <column name="user_name">cdavid</column>
+            <column name="password">adfjak</column>
+            <column name="user_level">9</column>
+        </table>
+        <!-- Table functional_area -->
+        <table name="functional_area">
+            <column name="id">1</column>
+            <column name="department_name">Marketing</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">2</column>
+            <column name="department_name">Research and Development</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">3</column>
+            <column name="department_name">Accounting</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">4</column>
+            <column name="department_name">Information Technology (IT)</column>
+        </table>
+        <!-- Table program -->
+        <table name="program">
+            <column name="id">1</column>
+            <column name="name">Instagram</column>
+            <column name="version_number">1.0</column>
+            <column name="release_number">1.0</column>
+        </table>
+        <table name="program">
+            <column name="id">2</column>
+            <column name="name">Facebook</column>
+            <column name="version_number">2.0.1</column>
+            <column name="release_number">2.0.0</column>
+        </table>
+    </database>
+</pma_xml_export>
