@@ -71,7 +71,7 @@
 						}
 						
 						else{
-							document.location.href="index.php";
+							document.location.href="index.php?user_level="+data;
 						}
 
 					}

@@ -20,7 +20,7 @@
 				}
 				
 				else{
-					echo 2;
+					echo $row[4];
 				}
 			}
 		
