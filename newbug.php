@@ -11,7 +11,6 @@
 			}
 			
 			div.bottom-border{
-				
 				border-bottom: 2px solid gray;
 			}
 		</style>
@@ -27,8 +26,9 @@
 		<div class="bottom-border">
 			<h1>New Bug Report Entry Page</h1>
 		
-			<form action="submitnewbug.php" method="post" onsubmit="return validate(this)">
-				Program:
+			<form action="submitnewbug.php" id="form_id" method="post" onsubmit="return validate(this)">
+				
+				<label for="program">Program:</label>
 				<select name="program">
 					<option value=null></option>
 					<?php
@@ -42,7 +42,7 @@
 					?>
 				</select>
 				
-				Report Type:
+				<label for="report_type">Report Type:</label>
 				<select name="report_type">
 					<option value=null></option>
 					<?php
@@ -63,7 +63,7 @@
 					?>
 				</select>
 				
-				Severity:
+				<label for="severity">Severity:</label>
 				<select name="severity">
 					<option value=null></option>
 					<?php
@@ -88,30 +88,32 @@
 				<br>
 				<br>
 				
+				
 				<div class="vertical-center">
-					Problem Summary:
+					<label for="problem_summary">Problem Summary:</label>
 					<textarea rows="1" cols="80" name="problem_summary"></textarea>
 				
-					Reproducible? <input type="checkbox" name="reproducible">
+					<label for="reproducible">Reproducible?</label><input type="checkbox" name="reproducible">
 				</div>
 				
 				<br>
 				
 				<div class="vertical-center">
-					Problem:
+					<label for="problem">Problem:</label>
 					<textarea rows="3" cols="80" name="problem"></textarea>
 				</div>
 				
 				<br>
 				
 				<div class="vertical-center">
-					Suggested Fix:
-					<textarea rows="3" cols="80" name="problem_summary"></textarea>
+					<label for="suggested_fix">Suggested Fix:</label>
+					<textarea rows="3" cols="80" name="suggested_fix"></textarea>
 				</div>
+				
 
 				<br>
 				
-				Reported By:
+				<label for="reported_by">Reported By:</label>
 				<select name="reported_by">
 					<option value=null></option>
 					<?php
@@ -125,7 +127,7 @@
 					?>
 				</select>
 				
-				Date: <input type="date" name="date">
+				<label for="date">Date:</label><input type="date" name="date">
 				
 				<br>
 				<br>
@@ -134,9 +136,8 @@
 			</div>
 			
 			<br>
-			<br>
 			
-			Functional Area:
+			<label for="functional_area">Functional Area:</label>
 			<select name="functional_area">
 					<option value=null></option>
 					<?php
@@ -151,7 +152,7 @@
 			</select>
 			
 			
-			Assigned To:
+			<label for="assigned_to">Assigned To:</label>
 			<select name="assigned_to">
 					<option value=null></option>
 					<?php
@@ -169,15 +170,14 @@
 			<br>
 			
 			
-			
 			<div class="vertical-center">
-				Comments:
-				<textarea rows="3" cols="80" name="problem"></textarea>
+				<label for="comments">Comments:</label>
+				<textarea rows="3" cols="80" name="comments"></textarea>
 			</div>
 			
 			<br>
 			
-			Status:
+			<label for="status">Status:</label>
 			<select name="status">
 					<option value=null></option>
 					<?php
@@ -198,7 +198,7 @@
 					?>
 			</select>
 			
-			Priority:
+			<label for="priority">Priority:</label>
 			<select name="priority">
 					<option value=null></option>
 					<?php
@@ -219,7 +219,7 @@
 					?>
 			</select>
 			
-			Resolution:
+			<label for="resolution">Resolution:</label>
 			<select name="resolution">
 					<option value=null></option>
 					<?php
@@ -240,7 +240,7 @@
 					?>
 			</select>
 			
-			Resolution Version:
+			<label for="resolution_version">Resolution Version:</label>
 			<select name="resolution_version">
 					<option value=null></option>
 					<?php
@@ -264,7 +264,7 @@
 			<br>
 			<br>
 			
-			Resolved by:
+			<label for="resolved_by">Resolved By:</label>
 			<select name="resolved_by">
 					<option value=null></option>
 					<?php
@@ -278,9 +278,9 @@
 					?>
 			</select>
 			
-			Date Resolved: <input type="date" name="resolved_date">
+			<label for="resolved_date">Resolved Date:</label><input type="date" name="resolved_date">
 			
-			Tested by:
+			<label for="tested_by">Tested By:</label>
 			<select name="tested_by">
 					<option value=null></option>
 					<?php
@@ -294,7 +294,7 @@
 					?>
 			</select>
 			
-			Tested Date: <input type="date" name="tested_date">
+			<label for="tested_date">Tested Date:</label><input type="date" name="tested_date">
 			
 			<br>
 			<br>
@@ -302,7 +302,7 @@
 			<label for="attachment">Attachment(s):</label>
 			<input type="file" id="attachment" name="file_name" multiple>
 			
-			Treat as Deferred? <input type="checkbox" name="treat_as_deferred">
+			<label for="treat_as_deferred">Treat as Deferred?</label><input type="checkbox" name="treat_as_deferred">
 			
 			<br>
 			<br>
@@ -313,7 +313,39 @@
 	
 	    <script language=Javascript>
 			function validate(theform) {
-                
+				if(theform.program.value === "null"){
+					alert ("Must select a program");
+					return false;
+				}
+				if(theform.report_type.value === "null"){
+					alert ("Must select a report type");
+					return false;
+				}
+				if(theform.severity.value === "null"){
+					alert ("Must select a severity");
+					return false;
+				}
+				if(theform.problem_summary.value === ""){
+					alert ("Problem Summary field must contain charaters");
+					return false;
+				}
+				if(theform.problem.value === ""){
+                    alert ("Problem field must contain charaters");
+                    return false;
+                }
+				if(theform.suggested_fix.value === ""){
+                    alert ("Suggested fix field must contain charaters");
+                    return false;
+				}
+                if(theform.reported_by.value === "null"){
+                    alert ("Reported by field must not be empty");
+                    return false;
+				}
+				if(theform.date.value === ""){
+                    alert ("Must select a valid date");
+                    return false;
+				}
+				
                 return true;
             }
 		
@@ -322,14 +354,6 @@
             }
         </script>
 	
-	
-	
 	</body>
-
-
-
-
-
-
 
 </html>
