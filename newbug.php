@@ -16,13 +16,11 @@
 		</style>
     </head>
 	<body>
-	
-	
 		<?php
 			$con = mysqli_connect("localhost","root");
 			mysqli_select_db($con, "bughound");
 			
-        ?>
+                ?>
 		<div class="bottom-border">
 			<h1>New Bug Report Entry Page</h1>
 		
@@ -92,8 +90,9 @@
 				<div class="vertical-center">
 					<label for="problem_summary">Problem Summary:</label>
 					<textarea rows="1" cols="80" name="problem_summary"></textarea>
-				
-					<label for="reproducible">Reproducible?</label><input type="checkbox" name="reproducible">
+                                        
+                                        <input type="hidden" value="0" name="reproducible">
+					<label for="reproducible">Reproducible?</label><input type="checkbox" value="1" name="reproducible">
 				</div>
 				
 				<br>
@@ -302,7 +301,8 @@
 			<label for="attachment">Attachment(s):</label>
 			<input type="file" id="attachment" name="file_name" multiple>
 			
-			<label for="treat_as_deferred">Treat as Deferred?</label><input type="checkbox" name="treat_as_deferred">
+                        <input type="hidden" value="0" name="treat_as_deferred">
+			<label for="treat_as_deferred">Treat as Deferred?</label><input type="checkbox" value="1" name="treat_as_deferred">
 			
 			<br>
 			<br>

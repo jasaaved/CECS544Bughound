@@ -3,7 +3,7 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
     <head>
         <meta charset="UTF-8">
-        <title>BugHound Employees</title>
+        <title>Bughound Employees</title>
     </head>
     <body>
         <h1>Add/Edit Employees</h1>
