@@ -18,7 +18,6 @@
     </head>
 	<body>
 	
-		
 	
 		<?php
 			$con = mysqli_connect("localhost","root");
@@ -279,7 +278,7 @@
 					?>
 			</select>
 			
-			Date: <input type="date" name="resolved_date">
+			Date Resolved: <input type="date" name="resolved_date">
 			
 			Tested by:
 			<select name="tested_by">
@@ -295,12 +294,20 @@
 					?>
 			</select>
 			
+			Tested Date: <input type="date" name="tested_date">
+			
+			<br>
+			<br>
+			
+			<label for="attachment">Attachment(s):</label>
+			<input type="file" id="attachment" name="file_name" multiple>
+			
 			Treat as Deferred? <input type="checkbox" name="treat_as_deferred">
 			
 			<br>
 			<br>
             <input type="submit" name="Submit" value="Submit">
-			<!-- <input type="button" value="Reset" id=button1 name=button1 onclick="reset_form()"> -->
+			<input type="reset" value="Reset">
 			<input type="button" value="Cancel" id=button2 name=button2 onclick="go_home()">
         </form>
 	
