@@ -27,13 +27,25 @@
 		
         <p><INPUT type="button" value="Add Program" id=button1 name=button1 onclick="add_program()"> <INPUT type="button" value="Return" id=button1 name=button1 onclick="go_home()">
         <script language=Javascript>
+			function getQueryVariable(variable)
+			{
+				   var query = window.location.search.substring(1);
+				   var vars = query.split("&");
+				   for (var i=0;i<vars.length;i++) {
+						   var pair = vars[i].split("=");
+						   if(pair[0] == variable){return pair[1];}
+				   }
+				   return(false);
+			}
 
             function go_home() {
-                window.location.replace("index.php");
+                var usrname = getQueryVariable("user_name");
+                window.location.replace("index.php?user_name="+usrname);
             }
 			
 			function add_program(){
-				window.location.replace("addprogram.php");
+				var usrname = getQueryVariable("user_name");
+                window.location.replace("addprogram.php?user_name="+usrname);
 			}
 
 		</script>    

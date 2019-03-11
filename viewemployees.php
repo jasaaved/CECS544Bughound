@@ -8,6 +8,7 @@
     <body>
         <?php
 			$con = mysqli_connect("localhost","root");
+			$var = $_GET['user_name'];
 			mysqli_select_db($con, "bughound");
 			$query = "SELECT id, name FROM employee";
 			$result = mysqli_query($con, $query); 
@@ -18,7 +19,7 @@
 				$none=1;
 				$id=$row[0];
 				$var_name;
-				printf("<tr><td><A href=\"editemployee.php?var_name=$id\">%d</a></td><td>%s</td></tr>\n",$row[0], $row[1]);
+				printf("<tr><td><A href=\"editemployee.php?user_name=$var&var_name=$id\">%d</a></td><td>%s</td></tr>\n",$row[0], $row[1]);
 			}
         ?>
         </table>
@@ -28,9 +29,20 @@
         ?>
         <p><INPUT type="button" value="Return" id=button1 name=button1 onclick="go_home()">
         <script language=Javascript>
+			function getQueryVariable(variable)
+			{
+				   var query = window.location.search.substring(1);
+				   var vars = query.split("&");
+				   for (var i=0;i<vars.length;i++) {
+						   var pair = vars[i].split("=");
+						   if(pair[0] == variable){return pair[1];}
+				   }
+				   return(false);
+			}
 
             function go_home() {
-                window.location.replace("index.php");
+                var usrname = getQueryVariable("user_name");
+                window.location.replace("index.php?user_name="+usrname);
             }
 
 		</script>    

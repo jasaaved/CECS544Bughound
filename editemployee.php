@@ -9,6 +9,7 @@
         <h1>Edit Employee</h1>
 		<?php
 			$var = $_GET['var_name'];
+			$var_name = $_GET['user_name'];
 			$con = mysqli_connect("localhost","root");
 			mysqli_select_db($con, "bughound");
 			$query = "SELECT * FROM employee WHERE id = $var";
@@ -16,7 +17,7 @@
 			$row = mysqli_fetch_row($result);
 		?>
         
-        <form action="submitemployeeedit.php?var_name=<?php echo $var; ?>" method="post" onsubmit="return validate(this)">
+        <form action="submitemployeeedit.php?user_name=<?php echo $var_name; ?>&var_name=<?php echo $var; ?>" method="post" onsubmit="return validate(this)">
             <table>
                 <tr><td>Name:</td><td><input type="Text" name="name" value="<?php echo $row[1]; ?>"></td></tr>
                 <tr><td>User Name:</td><td><input type="Text" name="user_name" value="<?php echo $row[2]; ?>"></td></tr>

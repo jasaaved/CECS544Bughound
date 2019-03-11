@@ -8,7 +8,7 @@
     <body>
         <h2>
             <?php
-		$id = $_GET['var_name'];
+				$id = $_GET['var_name'];
                 $name = $_POST['name'];
                 $user_name = $_POST['user_name'];
 		$password = $_POST['password'];
@@ -23,8 +23,20 @@
             <input type="button" value="Return" id=button1 name=button1 onclick="go_home()">    
         </h2>
         <script language=Javascript>
+			function getQueryVariable(variable)
+			{
+				   var query = window.location.search.substring(1);
+				   var vars = query.split("&");
+				   for (var i=0;i<vars.length;i++) {
+						   var pair = vars[i].split("=");
+						   if(pair[0] == variable){return pair[1];}
+				   }
+				   return(false);
+			}
+			
             function go_home(){
-                window.location.replace("index.php");
+                var usrname = getQueryVariable("user_name");
+                window.location.replace("index.php?user_name="+usrname);
             }
         </script>
             

@@ -6,7 +6,10 @@
     </head>
     <body>
         <h1>Add Employee</h1>
-        <form action="submitemployeeinfo.php" method="post" onsubmit="return validate(this)">
+		<?php
+			$var = $_GET['user_name'];
+		?>
+        <form action="submitemployeeinfo.php?user_name=<?php echo $var; ?>" method="post" onsubmit="return validate(this)">
             <table>
                 <tr><td>Name:</td><td><input type="Text" name="name"</td></tr>
                 <tr><td>User Name:</td><td><input type="Text" name="user_name"</td></tr>
@@ -40,8 +43,19 @@
                 }
                 return true;
             }
+			function getQueryVariable(variable)
+			{
+				   var query = window.location.search.substring(1);
+				   var vars = query.split("&");
+				   for (var i=0;i<vars.length;i++) {
+						   var pair = vars[i].split("=");
+						   if(pair[0] == variable){return pair[1];}
+				   }
+				   return(false);
+			}
 			function go_home(){
-                window.location.replace("index.php");
+				var usrname = getQueryVariable("user_name");
+                window.location.replace("index.php?user_name="+usrname);
             }
 </script>
     </body>
