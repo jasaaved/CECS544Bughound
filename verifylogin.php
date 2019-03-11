@@ -42,6 +42,27 @@
 			}
 		 }
 		 
+		 function VerifyAddProgram() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$name = $_POST['name'];
+			$version_number = $_POST['version_number'];
+			$release_number = $_POST['release_number'];
+			$query = "SELECT * FROM program WHERE name = '".$name."' AND version_number = '".$version_number."' AND release_number = '".$release_number."'";
+			$result = mysqli_query($con, $query);
+			$rowcount=mysqli_num_rows($result); 
+			if ($rowcount != 0) {
+				echo 0;
+			}
+			else {
+				$query = "INSERT INTO program (name, version_number, release_number) VALUES ('".$name."','".$version_number."','".$release_number."')";
+				mysqli_query($con, $query);
+				echo 1;
+			}
+		 }
+		 
+		 
+		 
 		
          echo $_POST["method"]();
 ?>
