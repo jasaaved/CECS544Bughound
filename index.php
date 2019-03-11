@@ -6,12 +6,17 @@
         <title>Bughound Employees</title>
     </head>
     <body>
-        <h1>Add/Edit Employees</h1>
+        <h1>Bughound</h1>
+		<?php
+			$var = $_GET['user_name'];
+		?>
 	<p>
 	<h3>
-	<A href="addemployee.php"><span class=\"linkline\">Add Employee</span></a> 
+	<A href="addemployee.php?user_name=<?php echo $var; ?>"+><span class=\"linkline\">Add Employee</span></a> 
 	<span class="tab"></span></p>
-	<A href="viewemployees.php"><span class=\"linkline\">View/Edit Employees</span></a> 
+	<A href="viewemployees.php?user_name=<?php echo $var; ?>"><span class=\"linkline\">View/Edit Employees</span></a>
+	<span class="tab"></span></p>
+	<A href="viewprograms.php?user_name=<?php echo $var; ?>"><span class=\"linkline\">Add/View Programs</span></a>
 	</h3>
 	</p>
         <script language=Javascript>
@@ -38,10 +43,27 @@
 				   return(false);
 			}
 			
-			var usrlvl = getQueryVariable("user_level");
-			if (usrlvl == 5){
-				$('body').append('<h1>Only a level 5 user can see this</h1>');
+			function do_ajax(user_name){
+				return theAjax("VerifyUserLevel", user_name);
 			}
+			
+			function theAjax(method, user_name){
+				return $.ajax({
+					url: 'verifylogin.php',
+					type: 'POST',
+					data: {method: method, user_name: user_name},
+					success: function(data){
+						if (data == 5){
+							$('body').append('<h1>Only a level 5 user can see this</h1>');
+						}
+
+					}
+				});
+			}
+			
+			var usrlvl = getQueryVariable("user_name");
+			ajax =  do_ajax(usrlvl);
+
 		</script>
     </body>
 </html>

@@ -26,6 +26,22 @@
 		
          }
 		 
+		 function VerifyUserLevel() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$user_name = $_POST['user_name'];
+			$query = "SELECT * FROM employee WHERE user_name = '".$user_name."'";
+			$result = mysqli_query($con, $query);
+			$rowcount=mysqli_num_rows($result); 
+			if ($rowcount == 0) {
+				echo 0;
+			}
+			else {
+				$row = mysqli_fetch_row($result);
+				echo $row[4];
+			}
+		 }
+		 
 		
          echo $_POST["method"]();
 ?>

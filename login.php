@@ -27,7 +27,6 @@
 				<tr><td>Password:</td><td><input type="Text" name="password"</td></tr>			
             </table>
             <input type="submit" name="Submit" value="Login">
-			<input type="button" value="Register" id=button1 name=button1 onclick="go_home()">
         </form>
 	<p>
 	<h3>
@@ -66,12 +65,12 @@
 							alert("User name does not exist");
 						}
 						
-						if (data == 1){
+						else if (data == 1){
 							alert("Password is incorrect");
 						}
 						
 						else{
-							document.location.href="index.php?user_level="+data;
+							document.location.href="index.php?user_name="+user_name;
 						}
 
 					}
