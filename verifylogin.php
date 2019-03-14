@@ -112,9 +112,37 @@
 			$ID = $_POST['ID'];
 			$query = "UPDATE employee SET user_level = 0 WHERE id = '".$ID."'";
 			mysqli_query($con, $query);
+		 }		
+		 
+		function VerifyEditProgram() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$ID = $_POST['ID'];
+			$name = $_POST['name'];
+            $version_number = $_POST['version_number'];
+			$release_number = $_POST['release_number'];;
+			$query = "SELECT * FROM program WHERE name = '".$name."' AND id <> '".$ID."' AND version_number = '".$version_number."' AND release_number = '".$release_number."'";
+			$result = mysqli_query($con, $query);
+			$rowcount=mysqli_num_rows($result); 
+			if ($rowcount != 0) {
+				echo 0;
+			}
+			else {
+				$query = "INSERT INTO program (id, name, version_number, release_number) VALUES ('".$ID."','".$name."','".$version_number."','".$release_number."') ON DUPLICATE KEY UPDATE name=VALUES(name),version_number=VALUES(version_number),release_number=VALUES(release_number)";
+				mysqli_query($con, $query);
+				echo 1;
+			}
 		 }		 
-		 
-		 
+
+		 function VerifyDeleteProgram() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$ID = $_POST['ID'];
+			$query = "DELETE FROM bug_report WHERE programId = '".$ID."'";
+			mysqli_query($con, $query);
+			$query = "DELETE FROM program WHERE id = '".$ID."'";
+			mysqli_query($con, $query);
+		 }		 
 		
          echo $_POST["method"]();
 ?>

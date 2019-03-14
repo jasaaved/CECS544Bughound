@@ -38,7 +38,7 @@
     </TD>        
 </TR>				
             </table>
-            <input type="submit" name="Submit" value="Next">
+            <input type="submit" name="Submit" value="Submit">
 			<input type="button" value="Delete User" id=button1 name=button1 onclick="del(<?php echo $row[0]; ?>)">
 			<input type="button" value="Cancel" id=button1 name=button1 onclick="go_home()">
         </form>
@@ -103,7 +103,6 @@
 			}
 			
 			function del(ID){
-				alert(ID);
 				ajax =  do_ajax2(ID);
 				return false;
 			}

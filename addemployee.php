@@ -28,7 +28,7 @@
     </TD>        
 </TR>				
             </table>
-            <input type="submit" name="Submit" value="Next">
+            <input type="submit" name="Submit" value="Submit">
 			<input type="button" value="Cancel" id=button1 name=button1 onclick="go_home()">
         </form>
 	<p>
