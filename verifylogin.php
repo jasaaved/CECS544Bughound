@@ -142,7 +142,17 @@
 			mysqli_query($con, $query);
 			$query = "DELETE FROM program WHERE id = '".$ID."'";
 			mysqli_query($con, $query);
-		 }		 
+		 }
+
+		 function VerifyAddArea() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$id = $_POST['id'];
+            $value= $_POST['value'];
+			$text = $_POST['text'];
+			$query = "INSERT INTO functional_and_prog (progid, funcname, funcid) VALUES ('".$id."','".$text."','".$value."')";
+			mysqli_query($con, $query);
+		}		 
 		
          echo $_POST["method"]();
 ?>

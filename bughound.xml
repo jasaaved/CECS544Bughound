@@ -5,7 +5,7 @@
 - https://www.phpmyadmin.net
 -
 - Host: 127.0.0.1
-- Generation Time: Mar 14, 2019 at 10:04 AM
+- Generation Time: Mar 14, 2019 at 02:29 PM
 - Server version: 10.1.37-MariaDB
 - PHP Version: 7.3.1
 -->
@@ -71,6 +71,15 @@
                   `user_level` int(11) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="functional_and_prog">
+                CREATE TABLE `functional_and_prog` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `progid` text NOT NULL,
+                  `funcname` text NOT NULL,
+                  `funcid` text NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
             </pma:table>
             <pma:table name="functional_area">
                 CREATE TABLE `functional_area` (
@@ -190,6 +199,25 @@
             <column name="user_name">cdavid</column>
             <column name="password">adfjak</column>
             <column name="user_level">9</column>
+        </table>
+        <!-- Table functional_and_prog -->
+        <table name="functional_and_prog">
+            <column name="id">1</column>
+            <column name="progid">1</column>
+            <column name="funcname">Marketing</column>
+            <column name="funcid">1</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">2</column>
+            <column name="progid">1</column>
+            <column name="funcname">Research and Development</column>
+            <column name="funcid">2</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">3</column>
+            <column name="progid">1</column>
+            <column name="funcname">Information Technology (IT)</column>
+            <column name="funcid">4</column>
         </table>
         <!-- Table functional_area -->
         <table name="functional_area">
