@@ -24,7 +24,7 @@
 		<div class="bottom-border">
 			<h1>New Bug Report Entry Page</h1>
 		
-			<form action="submitnewbug.php" id="form_id" method="post" onsubmit="return validate(this)">
+			<form action="submitnewbug.php" id="form_id" method="post" enctype="multipart/form-data" onsubmit="return validate(this)">
 				
 				<label for="program">Program:</label>
 				<select name="program">
@@ -298,17 +298,18 @@
 			<br>
 			<br>
 			
-			<label for="attachment">Attachment(s):</label>
-			<input type="file" id="attachment" name="file_name" multiple>
+			<label for="attachment">Attachment:</label>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+			<input id="attachment" name="file_name" type="file"/>
 			
-                        <input type="hidden" value="0" name="treat_as_deferred">
+                        <input type="hidden" value="0" name="treat_as_deferred"/>
 			<label for="treat_as_deferred">Treat as Deferred?</label><input type="checkbox" value="1" name="treat_as_deferred">
 			
 			<br>
 			<br>
-            <input type="submit" name="Submit" value="Submit">
-			<input type="reset" value="Reset">
-			<input type="button" value="Cancel" id=button2 name=button2 onclick="go_home()">
+            <input type="submit" name="Submit" value="Submit"/>
+			<input type="reset" value="Reset"/>
+			<input type="button" value="Cancel" id=button2 name=button2 onclick="go_home()"/>
         </form>
 	
 	    <script language=Javascript>
@@ -333,10 +334,6 @@
                     alert ("Problem field must contain charaters");
                     return false;
                 }
-				if(theform.suggested_fix.value === ""){
-                    alert ("Suggested fix field must contain charaters");
-                    return false;
-				}
                 if(theform.reported_by.value === "null"){
                     alert ("Reported by field must not be empty");
                     return false;

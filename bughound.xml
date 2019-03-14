@@ -5,7 +5,7 @@
 - https://www.phpmyadmin.net
 -
 - Host: 127.0.0.1
-- Generation Time: Feb 24, 2019 at 04:45 AM
+- Generation Time: Mar 14, 2019 at 03:17 AM
 - Server version: 10.1.37-MariaDB
 - PHP Version: 7.3.1
 -->
@@ -21,7 +21,7 @@
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                   `file_name` text NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+                ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
             </pma:table>
             <pma:table name="bug_report">
                 CREATE TABLE `bug_report` (
@@ -32,17 +32,17 @@
                   `problem_summary` text NOT NULL,
                   `reproducible` tinyint(1) NOT NULL,
                   `problem` text NOT NULL,
-                  `suggested_fix` text NOT NULL,
+                  `suggested_fix` text,
                   `reported_by_employeeId` int(11) NOT NULL,
                   `reported_date` date NOT NULL,
                   `attachmentId` int(11) DEFAULT NULL,
                   `functional_areaId` int(11) DEFAULT NULL,
                   `assigned_to_employeeId` int(11) DEFAULT NULL,
                   `comments` text,
-                  `status` enum('Open','Closed','Resolved') NOT NULL DEFAULT 'Open',
-                  `priority` text,
+                  `status` enum('Open','Closed','Resolved') DEFAULT NULL,
+                  `priority` enum('Fix Immediately','Fix as soon as possible','Fix before next milestone','Fix before release','Fix if possible','Optional') DEFAULT NULL,
                   `resolution` enum('Pending','Fixed','Irreproducible','Deferred','As designed','Withdrawn by Reporter','Need more info','Disagree with suggestion','Duplicate') DEFAULT NULL,
-                  `resolution_version` text,
+                  `resolution_version` enum('Pending','Fixed','Irreproducible','Deferred','As designed','Withdrawn by Reporter','Need more info','Disagree with suggestion','Duplicate') DEFAULT NULL,
                   `resolved_by_employeeId` int(11) DEFAULT NULL,
                   `resolved_date` date DEFAULT NULL,
                   `tested_by_employeeId` int(11) DEFAULT NULL,
@@ -60,7 +60,7 @@
                   CONSTRAINT `bug_report_ibfk_2` FOREIGN KEY (`functional_areaId`) REFERENCES `functional_area` (`id`),
                   CONSTRAINT `bug_report_ibfk_3` FOREIGN KEY (`reported_by_employeeId`) REFERENCES `employee` (`id`),
                   CONSTRAINT `bug_report_ibfk_4` FOREIGN KEY (`programId`) REFERENCES `program` (`id`)
-                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+                ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
             </pma:table>
             <pma:table name="employee">
                 CREATE TABLE `employee` (
@@ -105,6 +105,56 @@
             <column name="file_name">secondexample.txt</column>
         </table>
         <!-- Table bug_report -->
+        <table name="bug_report">
+            <column name="id">1</column>
+            <column name="programId">1</column>
+            <column name="report_type">Coding Error</column>
+            <column name="severity">Minor</column>
+            <column name="problem_summary">test</column>
+            <column name="reproducible">1</column>
+            <column name="problem">test</column>
+            <column name="suggested_fix">test</column>
+            <column name="reported_by_employeeId">3</column>
+            <column name="reported_date">0000-00-00</column>
+            <column name="attachmentId">NULL</column>
+            <column name="functional_areaId">NULL</column>
+            <column name="assigned_to_employeeId">NULL</column>
+            <column name="comments">NULL</column>
+            <column name="status">Open</column>
+            <column name="priority">NULL</column>
+            <column name="resolution">NULL</column>
+            <column name="resolution_version">NULL</column>
+            <column name="resolved_by_employeeId">NULL</column>
+            <column name="resolved_date">NULL</column>
+            <column name="tested_by_employeeId">NULL</column>
+            <column name="tested_date">NULL</column>
+            <column name="treat_as_deferred">NULL</column>
+        </table>
+        <table name="bug_report">
+            <column name="id">3</column>
+            <column name="programId">2</column>
+            <column name="report_type">Suggestion</column>
+            <column name="severity">Serious</column>
+            <column name="problem_summary">i dont like it</column>
+            <column name="reproducible">1</column>
+            <column name="problem">its no good</column>
+            <column name="suggested_fix">make it good</column>
+            <column name="reported_by_employeeId">3</column>
+            <column name="reported_date">1993-10-12</column>
+            <column name="attachmentId">NULL</column>
+            <column name="functional_areaId">2</column>
+            <column name="assigned_to_employeeId">1</column>
+            <column name="comments">it better start working</column>
+            <column name="status">Open</column>
+            <column name="priority">Fix Immediately</column>
+            <column name="resolution">Pending</column>
+            <column name="resolution_version">Pending</column>
+            <column name="resolved_by_employeeId">3</column>
+            <column name="resolved_date">1994-10-12</column>
+            <column name="tested_by_employeeId">6</column>
+            <column name="tested_date">1995-10-12</column>
+            <column name="treat_as_deferred">1</column>
+        </table>
         <!-- Table employee -->
         <table name="employee">
             <column name="id">1</column>
