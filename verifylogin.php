@@ -19,6 +19,10 @@
 					echo 1;
 				}
 				
+				else if ($row[4] == 0){
+					echo 0;
+				}
+				
 				else{
 					echo $row[4];
 				}
@@ -81,6 +85,34 @@
 			}
 		 }
 		 
+		 function VerifyEditEmployee() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$ID = $_POST['ID'];
+			$name = $_POST['name'];
+            $user_name = $_POST['user_name'];
+			$password = $_POST['password'];
+            $user_level = $_POST['user_level'];
+			$query = "SELECT * FROM employee WHERE user_name = '".$user_name."' AND id <> '".$ID."'";
+			$result = mysqli_query($con, $query);
+			$rowcount=mysqli_num_rows($result); 
+			if ($rowcount != 0) {
+				echo 0;
+			}
+			else {
+				$query = "INSERT INTO employee (id, name, user_name, password, user_level) VALUES ('".$ID."','".$name."','".$user_name."','".$password."','".$user_level."') ON DUPLICATE KEY UPDATE name=VALUES(name),user_name=VALUES(user_name),password=VALUES(password),user_level=VALUES(user_level)";
+				mysqli_query($con, $query);
+				echo 1;
+			}
+		 }		 
+
+		 function VerifyDeleteEmployee() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$ID = $_POST['ID'];
+			$query = "UPDATE employee SET user_level = 0 WHERE id = '".$ID."'";
+			mysqli_query($con, $query);
+		 }		 
 		 
 		 
 		
