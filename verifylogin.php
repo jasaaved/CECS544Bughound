@@ -176,7 +176,26 @@
 				mysqli_query($con, $query);
 				echo 1;
 			}
-		 }		
+		 }
+		function VerifyUpdateArea() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$ID = $_POST['ID'];
+			$name = $_POST['name'];
+			$query = "SELECT * FROM functional_area WHERE department_name = '".$name."' AND id <> '".$ID."'";
+			$result = mysqli_query($con, $query);
+			$rowcount=mysqli_num_rows($result); 
+			if ($rowcount != 0) {
+				echo 0;
+			}
+			else {
+				$query = "INSERT INTO functional_area (id, department_name) VALUES ('".$ID."','".$name."') ON DUPLICATE KEY UPDATE department_name=VALUES(department_name)";
+				mysqli_query($con, $query);
+				$query = "UPDATE functional_and_prog SET funcname = '".$name."' WHERE funcid = '".$ID."'";
+				mysqli_query($con, $query);
+				echo 1;
+			}
+		 }		 
 		
          echo $_POST["method"]();
 ?>

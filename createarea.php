@@ -42,7 +42,7 @@
 			}
 			function go_home(){
 				var usrname = getQueryVariable("user_name");
-                window.location.replace("viewprograms.php?user_name="+usrname);
+                window.location.replace("viewareas.php?user_name="+usrname);
             }
 			
 			function do_ajax(name){

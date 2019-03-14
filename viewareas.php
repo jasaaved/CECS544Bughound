@@ -13,7 +13,7 @@
 			mysqli_select_db($con, "bughound");
 			$query = "SELECT id, department_name FROM functional_area";
 			$result = mysqli_query($con, $query); 
-			echo "<table border=1 ><th>Function Name</th><\n";
+			echo "<table border=1 ><th>Functional Areas</th><\n";
 			$none = 0;
 			while($row=mysqli_fetch_row($result))
 			{
