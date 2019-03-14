@@ -195,6 +195,17 @@
 				mysqli_query($con, $query);
 				echo 1;
 			}
+		 }
+		 function VerifyDeleteArea() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$ID = $_POST['ID'];
+			$query = "DELETE FROM functional_and_prog WHERE funcid = '".$ID."'";
+			mysqli_query($con, $query);
+			$query = "UPDATE bug_report SET functional_areaId = NULL WHERE functional_areaId = '".$ID."'";
+			mysqli_query($con, $query);
+			$query = "DELETE FROM functional_area WHERE id = '".$ID."'";
+			mysqli_query($con, $query);
 		 }		 
 		
          echo $_POST["method"]();

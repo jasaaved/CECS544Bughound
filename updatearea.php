@@ -82,7 +82,7 @@
 			}
 			
 			function do_ajax2(ID){
-				return theAjax2("VerifyDeleteProgram", ID);
+				return theAjax2("VerifyDeleteArea", ID);
 			}
 			
 			function theAjax2(method, ID){
@@ -92,7 +92,7 @@
 					data: {method: method, ID: ID},
 					success: function(data){
 							var usrname = getQueryVariable("user_name");
-							document.location.href="viewprograms.php?user_name="+usrname;
+							document.location.href="viewareas.php?user_name="+usrname;
 					}
 
 				});
@@ -100,7 +100,7 @@
 			
 			function go_home(){
 				var usrname = getQueryVariable("user_name");
-                window.location.replace("viewprograms.php?user_name="+usrname);
+                window.location.replace("viewareas.php?user_name="+usrname);
             }
 </script>
     </body>
