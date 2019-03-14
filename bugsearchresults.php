@@ -11,13 +11,40 @@
             }
 
             div.bottom-border{
-                border-bottom: 2px solid gray;
+                border-bottom: 4px solid gray;
+            }
+            
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 50%;
+                margin: 0px auto;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+            button{
+                height:30px; 
+                width:100px; 
+                margin: -20px -50px; 
+                position:relative;
+                top:50%; 
+                left:50%;
             }
         </style>
     </head>
     
     <body>
-        <form action="editbug.php?user_name=<?php echo $username; ?>" method="post" >
+        <input type="button" value="Back" id=button2 name=button2 onclick="go_search()">
+        <h1 align="center">Bug Search Results</h1>
+        
         <?php
             $con = mysqli_connect("localhost","root");
             mysqli_select_db($con, "bughound");
@@ -79,20 +106,20 @@
             }
             
             $query .= ";";
-            echo $query;
             $results=mysqli_query($con, $query);
             
             if (mysqli_num_rows($results) > 0)
             {
                 while($row=mysqli_fetch_row($results))
                 {
-                    $query = "SELECT * FROM program WHERE id=" . $program . ";";
-                    $results = mysqli_query($con, $query);
-                    $p_row = mysqli_fetch_row($results);
+                    $query = "SELECT * FROM program WHERE id=" . $row[1] . ";";
+                    $results2 = mysqli_query($con, $query);
+                    $p_row = mysqli_fetch_row($results2);
                     $program = $p_row[1] . " v" . $p_row[2];
                     
-                    echo "<div class=\".bottom-border\">";
-                    echo "<table style=\"width:100%\">";
+                    echo "<br>";
+                    echo "<div class=\"bottom-border\">";
+                    echo "<table style=\"width:50%\">";
                     echo "<tr>";
                     echo "<td>Program: </td>";
                     echo "<td>".$p_row[1] . " v" . $p_row[2]."</td>";
@@ -180,7 +207,7 @@
                     
                     echo "<tr>";
                     echo "<td>Status: </td>";
-                    echo "<td>$$status</td>";
+                    echo "<td>$row[14]</td>";
                     echo "</tr>";
                     
                     echo "<tr>";
@@ -240,18 +267,57 @@
                     
                     echo "</table>";
                     
+                    echo "<form action=\"editbug.php?user_name=$username\" method=\"post\" >";
+                    echo "<input type=\"hidden\" name=\"program\"value=$row[1]>";
+                    echo "<input type=\"hidden\" name=\"report_type\"value=$row[2]>";
+                    echo "<input type=\"hidden\" name=\"severity\"value=$row[3]>";
+                    echo "<input type=\"hidden\" name=\"problem_summary\"value=$row[4]>";
+                    echo "<input type=\"hidden\" name=\"reproducible\"value=$row[5]>";
+                    echo "<input type=\"hidden\" name=\"problem\"value=$row[6]>";
+                    echo "<input type=\"hidden\" name=\"suggested_fix\"value=$row[7]>";
+                    echo "<input type=\"hidden\" name=\"reported_by\"value=$row[8]>";
+                    echo "<input type=\"hidden\" name=\"date\"value=$row[9]>";
+                    echo "<input type=\"hidden\" name=\"attachment\"value=$row[10]>";
+                    echo "<input type=\"hidden\" name=\"functional_area\"value=$row[11]>";
+                    echo "<input type=\"hidden\" name=\"assigned_to\"value=$row[12]>";
+                    echo "<input type=\"hidden\" name=\"comments\"value=$row[13]>";
+                    echo "<input type=\"hidden\" name=\"status\"value=$row[14]>";
+                    echo "<input type=\"hidden\" name=\"priority\"value=$row[15]>";
+                    echo "<input type=\"hidden\" name=\"resolution\"value=$row[16]>";
+                    echo "<input type=\"hidden\" name=\"resolution_version\"value=$row[17]>";
+                    echo "<input type=\"hidden\" name=\"resolved_by\"value=$row[18]>";
+                    echo "<input type=\"hidden\" name=\"resolved_date\"value=$row[19]>";
+                    echo "<input type=\"hidden\" name=\"tested_by\"value=$row[20]>";
+                    echo "<input type=\"hidden\" name=\"tested_date\"value=$row[21]>";
+                    echo "<input type=\"hidden\" name=\"treat_as_deferred\"value=$row[22]>";
+                    
+                    echo "<br>";
+                    echo "<br>";
+                    
+                    echo "<button type=\"submit\" name=\"select_bug\" value=\"Submit\">Edit Report</button>";
+                    echo "</form>";
+                    
+                    echo "<br>";
+                    echo "<br>";
                     echo "</div>";
+                    
                 }
             }
             else
             {
                 echo "<h2>No Results Found</h2>";
+                echo "<input type=\"button\" value=\"Cancel\" id=button2 name=button2 onclick=\"go_home()\"/>";
             }
         ?>
         
-        
-            
-        </form>
+        <script language=Javascript>
+            function go_home(){
+                window.location.replace("index.php?user_name=<?php echo $username?>");
+            }
+            function go_search(){
+                window.location.replace("bugsearch.php?user_name=<?php echo $username?>");
+            }
+        </script>
         
     </body>
     
