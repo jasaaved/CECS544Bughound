@@ -42,6 +42,7 @@
     </head>
     
     <body>
+        <input type="button" value="Back" id=button2 name=button2 onclick="go_search()">
         <h1 align="center">Bug Search Results</h1>
         
         <?php
@@ -305,10 +306,18 @@
             else
             {
                 echo "<h2>No Results Found</h2>";
+                echo "<input type=\"button\" value=\"Cancel\" id=button2 name=button2 onclick=\"go_home()\"/>";
             }
         ?>
         
-        
+        <script language=Javascript>
+            function go_home(){
+                window.location.replace("index.php?user_name=<?php echo $username?>");
+            }
+            function go_search(){
+                window.location.replace("bugsearch.php?user_name=<?php echo $username?>");
+            }
+        </script>
         
     </body>
     
