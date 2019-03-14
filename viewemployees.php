@@ -27,7 +27,9 @@
             if($none==0)
 				echo "<h3>No matching records found.</h3>\n";
         ?>
-        <p><INPUT type="button" value="Return" id=button1 name=button1 onclick="go_home()">
+		<p><INPUT type="button" value="Add Employee" id=button1 name=button1 onclick="add()">
+        <INPUT type="button" value="Return" id=button1 name=button1 onclick="go_home()">
+		
         <script language=Javascript>
 			function getQueryVariable(variable)
 			{
@@ -44,6 +46,11 @@
                 var usrname = getQueryVariable("user_name");
                 window.location.replace("index.php?user_name="+usrname);
             }
+			
+			function add(){
+				var usrname = getQueryVariable("user_name");
+                window.location.replace("addemployee.php?user_name="+usrname);
+			}
 
 		</script>    
     </body>

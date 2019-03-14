@@ -61,6 +61,26 @@
 			}
 		 }
 		 
+		 function VerifyAddEmployee() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$name = $_POST['name'];
+            $user_name = $_POST['user_name'];
+			$password = $_POST['password'];
+            $user_level = $_POST['user_level'];
+			$query = "SELECT * FROM employee WHERE user_name = '".$user_name."'";
+			$result = mysqli_query($con, $query);
+			$rowcount=mysqli_num_rows($result); 
+			if ($rowcount != 0) {
+				echo 0;
+			}
+			else {
+				$query = "INSERT INTO employee (name, user_name, password, user_level) VALUES ('".$name."','".$user_name."','".$password."','".$user_level."')";
+				mysqli_query($con, $query);
+				echo 1;
+			}
+		 }
+		 
 		 
 		 
 		
