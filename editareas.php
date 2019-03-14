@@ -36,7 +36,7 @@
         </table>
 
 		
-        <p><INPUT type="button" value="Add Area" id=button1 name=button1 onclick="addarea()"><INPUT type="button" value="Remove Area" id=button1 name=button1 onclick="removea()"><INPUT type="button" value="Update Area" id=button1 name=button1 onclick="update()"><INPUT type="button" value="Create Area" id=button1 name=button1 onclick="create()"><INPUT type="button" value="Return" id=button1 name=button1 onclick="go_home()">
+        <p><INPUT type="button" value="Add Area" id=button1 name=button1 onclick="addarea()"><INPUT type="button" value="Remove Area" id=button1 name=button1 onclick="removea()"><INPUT type="button" value="Return" id=button1 name=button1 onclick="go_home()">
         <script language=Javascript>
 			function getQueryVariable(variable)
 			{

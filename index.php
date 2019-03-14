@@ -46,11 +46,15 @@
 							var view_edit_link = "viewemployees.php?user_name="+usrlvl;
 							var programs_link = "viewprograms.php?user_name="+usrlvl;
 							var areas_link = "areas.php?user_name="+usrlvl;
+							var main_areas_link = "viewareas.php?user_name="+usrlvl;
+							var export_link = "export.php?user_name="+usrlvl;
 							var database_maintenance = "http://localhost/phpmyadmin/db_structure.php?server=1&db=bughound";
 							$('body').append('<h2>Admin Control:</h2>');
 							$('<h3><a href="'+view_edit_link+'"><span class=\"linkline\">View/Add/Edit Employee</span></a></h3>').appendTo($('body'));
 							$('<h3><a href="'+programs_link+'"><span class=\"linkline\">View/Add/Edit Programs</span></a></h3>').appendTo($('body'));
-							$('<h3><a href="'+areas_link+'"><span class=\"linkline\">View/Add/Edit Functional Areas</span></a></h3>').appendTo($('body'));
+							$('<h3><a href="'+main_areas_link+'"><span class=\"linkline\">View/Add/Edit Functional Areas</span></a></h3>').appendTo($('body'));
+							$('<h3><a href="'+areas_link+'"><span class=\"linkline\">Add/Remove Functional Areas From Programs</span></a></h3>').appendTo($('body'));
+							$('<h3><a href="'+export_link+'"><span class=\"linkline\">Export</span></a></h3>').appendTo($('body'));
 							$('<h3><a target="_blank" href="'+database_maintenance+'"><span class=\"linkline\">Database Maintenance</span></a></h3>').appendTo($('body'));
 							
 							
