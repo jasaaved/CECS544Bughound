@@ -12,25 +12,14 @@
 		?>
 	<p>
 	<h3>
-	<A href="addemployee.php?user_name=<?php echo $var; ?>"+><span class=\"linkline\">Add Employee</span></a> 
+	<A href="newbug.php?user_name=<?php echo $var; ?>"><span class=\"linkline\">Create New Bug Report</span></a> 
 	<span class="tab"></span></p>
-	<A href="viewemployees.php?user_name=<?php echo $var; ?>"><span class=\"linkline\">View/Edit Employees</span></a>
+	<A href="viewemployees.php?user_name=<?php echo $var; ?>"><span class=\"linkline\">Bug Search</span></a>
 	<span class="tab"></span></p>
-	<A href="viewprograms.php?user_name=<?php echo $var; ?>"><span class=\"linkline\">Add/View Programs</span></a>
+	<A href="viewprograms.php?user_name=<?php echo $var; ?>"><span class=\"linkline\">View/Update Bug Reports</span></a>
 	</h3>
 	</p>
         <script language=Javascript>
-            function validate(theform) {
-                if(theform.first.value === ""){
-                    alert ("First name field must contain characters");
-                    return false;
-                }
-                if(theform.last.value === ""){
-                    alert ("Last name field must contain characters");
-                    return false;
-                }
-                return true;
-            }
 			
 			function getQueryVariable(variable)
 			{
@@ -54,7 +43,18 @@
 					data: {method: method, user_name: user_name},
 					success: function(data){
 						if (data == 5){
-							$('body').append('<h1>Only a level 5 user can see this</h1>');
+							var usrlvl = getQueryVariable("user_name");			
+							var view_edit_link = "viewemployees.php?user_name="+usrlvl;
+							var programs_link = "viewprograms.php?user_name="+usrlvl;
+							var areas_link = "areas.php?user_name="+usrlvl;
+							var database_maintenance = "http://localhost/phpmyadmin/db_structure.php?server=1&db=bughound";
+							$('body').append('<h2>Admin Control:</h2>');
+							$('<h3><a href="'+view_edit_link+'"><span class=\"linkline\">View/Add/Edit Employee</span></a></h3>').appendTo($('body'));
+							$('<h3><a href="'+programs_link+'"><span class=\"linkline\">View/Add/Edit Programs</span></a></h3>').appendTo($('body'));
+							$('<h3><a href="'+areas_link+'"><span class=\"linkline\">View/Add/Edit Functional Areas</span></a></h3>').appendTo($('body'));
+							$('<h3><a target="_blank" href="'+database_maintenance+'"><span class=\"linkline\">Database Maintenance</span></a></h3>').appendTo($('body'));
+							
+							
 						}
 
 					}
