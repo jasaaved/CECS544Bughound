@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
     <head>
         <meta charset="UTF-8">
         <title>New Bug Page</title>

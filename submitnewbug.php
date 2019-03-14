@@ -150,7 +150,14 @@
                         echo "Error: " . $query . "<br>" . $con->error;
                     }
                 ?>
+                
+            <input type="button" value="Cancel" id=button1 name=button1 onclick="go_home()">
 	</body>
-
+        <script language=Javascript>
+                function go_home(){
+                        var usrname = getQueryVariable("user_name");
+                window.location.replace("index.php?user_name="+usrname);
+            }
+        </script>
 
 </html>
