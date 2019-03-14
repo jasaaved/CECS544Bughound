@@ -36,7 +36,7 @@
         </table>
 
 		
-        <p><INPUT type="button" value="Add Area" id=button1 name=button1 onclick="addarea()"><INPUT type="button" value="Remove Area" id=button1 name=button1 onclick="remove()"><INPUT type="button" value="Update Area" id=button1 name=button1 onclick="update()"><INPUT type="button" value="Create Area" id=button1 name=button1 onclick="create()"><INPUT type="button" value="Return" id=button1 name=button1 onclick="go_home()">
+        <p><INPUT type="button" value="Add Area" id=button1 name=button1 onclick="addarea()"><INPUT type="button" value="Remove Area" id=button1 name=button1 onclick="removea()"><INPUT type="button" value="Update Area" id=button1 name=button1 onclick="update()"><INPUT type="button" value="Create Area" id=button1 name=button1 onclick="create()"><INPUT type="button" value="Return" id=button1 name=button1 onclick="go_home()">
         <script language=Javascript>
 			function getQueryVariable(variable)
 			{
@@ -61,6 +61,24 @@
 				var release_number = getQueryVariable("release_number");
 				var id = getQueryVariable("id");
 				window.location.replace("addarea.php?user_name="+usrname+"&prog_name="+prog_name+"&version_number="+version_number+"&release_number="+release_number+"&id="+id);
+			}
+			
+			function addarea(){
+				var usrname = getQueryVariable("user_name");
+				var prog_name = getQueryVariable("prog_name");
+				var version_number = getQueryVariable("version_number");
+				var release_number = getQueryVariable("release_number");
+				var id = getQueryVariable("id");
+				window.location.replace("addarea.php?user_name="+usrname+"&prog_name="+prog_name+"&version_number="+version_number+"&release_number="+release_number+"&id="+id);
+			}
+			
+			function removea(){
+				var usrname = getQueryVariable("user_name");
+				var prog_name = getQueryVariable("prog_name");
+				var version_number = getQueryVariable("version_number");
+				var release_number = getQueryVariable("release_number");
+				var id = getQueryVariable("id");
+				window.location.replace("removearea.php?user_name="+usrname+"&prog_name="+prog_name+"&version_number="+version_number+"&release_number="+release_number+"&id="+id);
 			}
 			
 

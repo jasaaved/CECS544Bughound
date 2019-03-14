@@ -152,7 +152,15 @@
 			$text = $_POST['text'];
 			$query = "INSERT INTO functional_and_prog (progid, funcname, funcid) VALUES ('".$id."','".$text."','".$value."')";
 			mysqli_query($con, $query);
-		}		 
+		}	
+
+		 function VerifyRemoveArea() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+            $value= $_POST['value'];
+			$query = "DELETE FROM functional_and_prog WHERE id = '".$value."'";
+			mysqli_query($con, $query);
+		}		
 		
          echo $_POST["method"]();
 ?>
