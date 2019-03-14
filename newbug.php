@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
     <head>
         <meta charset="UTF-8">
         <title>New Bug Page</title>
@@ -20,12 +19,11 @@
 		<?php
 			$con = mysqli_connect("localhost","root");
 			mysqli_select_db($con, "bughound");
-			
                 ?>
 		<div class="bottom-border">
 			<h1>New Bug Report Entry Page</h1>
 		
-			<form action="submitnewbug.php" id="form_id" method="post" enctype="multipart/form-data" onsubmit="return validate(this)">
+			<form action="submitnewbug.php" method="post" enctype="multipart/form-data" onsubmit="return validate(this)">
 				
 				<label for="program">Program:</label>
 				<select name="program">
@@ -151,24 +149,39 @@
 					?>
 			</select>
 			
-			
-			<label for="assigned_to">Assigned To:</label>
-			<select name="assigned_to">
-					<option value=null></option>
-					<?php
-						$query = "SELECT * FROM employee";
-						$result = mysqli_query($con, $query);
-						
-						while($row=mysqli_fetch_row($result))
-						{
-							echo "<option value=$row[0]>$row[1]</option>";
-						}
-					?>
+                        <label for="assigned_to">Assigned To:</label>
+			<?php
+                            $username = $_GET['user_name'];
+                            $query = "SELECT * FROM employees WHERE user_name='$username'";
+                            
+                            $result = mysqli_query($con, $query);
+                            $row = mysqli_fetch_row($result);
+                            
+                            $user_level = $row[4];
+                            
+                            if ($user_level !== 5)
+                            {
+                                echo "<select name=\"assigned_to\" disabled>";
+                            }
+                            else
+                            {
+                                echo "<select name=\"assigned_to\">";
+                            }
+                        ?>
+                            <option value=null></option>
+                            <?php
+                                $query = "SELECT * FROM employee";
+                                $result = mysqli_query($con, $query);
+
+                                while($row=mysqli_fetch_row($result))
+                                {
+                                    echo "<option value=$row[0]>$row[1]</option>";
+                                }
+                            ?>
 			</select>
 			
 			<br>
 			<br>
-			
 			
 			<div class="vertical-center">
 				<label for="comments">Comments:</label>
@@ -199,24 +212,35 @@
 			</select>
 			
 			<label for="priority">Priority:</label>
-			<select name="priority">
-					<option value=null></option>
-					<?php
-						$query = "SELECT TRIM(TRAILING ')' FROM TRIM(LEADING '(' FROM TRIM(LEADING 'enum' FROM column_type))) column_type FROM information_schema.columns WHERE table_name = 'bug_report' AND column_name = 'priority'";
-						
-						if ($result = mysqli_query($con, $query))
-						{
-							$row=mysqli_fetch_row($result);
-							$enum=explode(',',$row[0]);
-							
-							for ($i=0; $i < sizeOf($enum); $i++)
-							{
-								$str = str_replace('\'', '', $enum[$i]);
-								$val = $i+1;
-								echo "<option value=$val>$str</option>";
-							}
-						}
-					?>
+                        
+                        <?php
+                            if ($user_level !== 5)
+                            {
+                                echo "<select name=\"priority\" disabled>";
+                            }
+                            else
+                            {
+                                echo "<select name=\"priority\">";
+                            }
+                            
+                        ?>
+                            <option value=null></option>
+                            <?php
+                                    $query = "SELECT TRIM(TRAILING ')' FROM TRIM(LEADING '(' FROM TRIM(LEADING 'enum' FROM column_type))) column_type FROM information_schema.columns WHERE table_name = 'bug_report' AND column_name = 'priority'";
+
+                                    if ($result = mysqli_query($con, $query))
+                                    {
+                                            $row=mysqli_fetch_row($result);
+                                            $enum=explode(',',$row[0]);
+
+                                            for ($i=0; $i < sizeOf($enum); $i++)
+                                            {
+                                                    $str = str_replace('\'', '', $enum[$i]);
+                                                    $val = $i+1;
+                                                    echo "<option value=$val>$str</option>";
+                                            }
+                                    }
+                            ?>
 			</select>
 			
 			<label for="resolution">Resolution:</label>
