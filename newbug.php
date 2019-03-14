@@ -19,11 +19,12 @@
 		<?php
 			$con = mysqli_connect("localhost","root");
 			mysqli_select_db($con, "bughound");
+                        $username = $_GET['user_name']
                 ?>
 		<div class="bottom-border">
 			<h1>New Bug Report Entry Page</h1>
 		
-			<form action="submitnewbug.php" method="post" enctype="multipart/form-data" onsubmit="return validate(this)">
+			<form action="submitnewbug.php?user_name=<?php echo $username; ?>" method="post" enctype="multipart/form-data" onsubmit="return validate(this)">
 				
 				<label for="program">Program:</label>
 				<select name="program">
@@ -191,7 +192,6 @@
 			
 			<label for="status">Status:</label>
 			<select name="status">
-					<option value=null></option>
 					<?php
 						$query = "SELECT TRIM(TRAILING ')' FROM TRIM(LEADING '(' FROM TRIM(LEADING 'enum' FROM column_type))) column_type FROM information_schema.columns WHERE table_name = 'bug_report' AND column_name = 'status'";
 						

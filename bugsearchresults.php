@@ -115,7 +115,6 @@
                     $query = "SELECT * FROM program WHERE id=" . $row[1] . ";";
                     $results2 = mysqli_query($con, $query);
                     $p_row = mysqli_fetch_row($results2);
-                    $program = $p_row[1] . " v" . $p_row[2];
                     
                     echo "<br>";
                     echo "<div class=\"bottom-border\">";
@@ -268,28 +267,29 @@
                     echo "</table>";
                     
                     echo "<form action=\"editbug.php?user_name=$username\" method=\"post\" >";
-                    echo "<input type=\"hidden\" name=\"program\"value=$row[1]>";
-                    echo "<input type=\"hidden\" name=\"report_type\"value=$row[2]>";
-                    echo "<input type=\"hidden\" name=\"severity\"value=$row[3]>";
-                    echo "<input type=\"hidden\" name=\"problem_summary\"value=$row[4]>";
-                    echo "<input type=\"hidden\" name=\"reproducible\"value=$row[5]>";
-                    echo "<input type=\"hidden\" name=\"problem\"value=$row[6]>";
-                    echo "<input type=\"hidden\" name=\"suggested_fix\"value=$row[7]>";
-                    echo "<input type=\"hidden\" name=\"reported_by\"value=$row[8]>";
+                    echo "<input type=\"hidden\" name=\"bug_id\" value=$row[0]>";
+                    echo "<input type=\"hidden\" name=\"program\" value=$row[1]>";
+                    echo "<input type=\"hidden\" name=\"report_type\" value=\"$row[2]\">";
+                    echo "<input type=\"hidden\" name=\"severity\" value=$row[3]>";
+                    echo "<input type=\"hidden\" name=\"problem_summary\" value=\"$row[4]\">";
+                    echo "<input type=\"hidden\" name=\"reproducible\" value=$row[5]>";
+                    echo "<input type=\"hidden\" name=\"problem\" value=\"$row[6]\">";
+                    echo "<input type=\"hidden\" name=\"suggested_fix\" value=\"$row[7]\">";
+                    echo "<input type=\"hidden\" name=\"reported_by\" value=\"$row[8]\">";
                     echo "<input type=\"hidden\" name=\"date\"value=$row[9]>";
-                    echo "<input type=\"hidden\" name=\"attachment\"value=$row[10]>";
-                    echo "<input type=\"hidden\" name=\"functional_area\"value=$row[11]>";
-                    echo "<input type=\"hidden\" name=\"assigned_to\"value=$row[12]>";
-                    echo "<input type=\"hidden\" name=\"comments\"value=$row[13]>";
-                    echo "<input type=\"hidden\" name=\"status\"value=$row[14]>";
-                    echo "<input type=\"hidden\" name=\"priority\"value=$row[15]>";
-                    echo "<input type=\"hidden\" name=\"resolution\"value=$row[16]>";
-                    echo "<input type=\"hidden\" name=\"resolution_version\"value=$row[17]>";
-                    echo "<input type=\"hidden\" name=\"resolved_by\"value=$row[18]>";
-                    echo "<input type=\"hidden\" name=\"resolved_date\"value=$row[19]>";
-                    echo "<input type=\"hidden\" name=\"tested_by\"value=$row[20]>";
-                    echo "<input type=\"hidden\" name=\"tested_date\"value=$row[21]>";
-                    echo "<input type=\"hidden\" name=\"treat_as_deferred\"value=$row[22]>";
+                    echo "<input type=\"hidden\" name=\"attachment\" value=$row[10]>";
+                    echo "<input type=\"hidden\" name=\"functional_area\" value=$row[11]>";
+                    echo "<input type=\"hidden\" name=\"assigned_to\" value=$row[12]>";
+                    echo "<input type=\"hidden\" name=\"comments\" value=\"$row[13]\">";
+                    echo "<input type=\"hidden\" name=\"status\" value=$row[14]>";
+                    echo "<input type=\"hidden\" name=\"priority\" value=\"$row[15]\">";
+                    echo "<input type=\"hidden\" name=\"resolution\" value=\"$row[16]\">";
+                    echo "<input type=\"hidden\" name=\"resolution_version\" value=\"$row[17]\">";
+                    echo "<input type=\"hidden\" name=\"resolved_by\" value=$row[18]>";
+                    echo "<input type=\"hidden\" name=\"resolved_date\" value=$row[19]>";
+                    echo "<input type=\"hidden\" name=\"tested_by\" value=$row[20]>";
+                    echo "<input type=\"hidden\" name=\"tested_date\" value=$row[21]>";
+                    echo "<input type=\"hidden\" name=\"treat_as_deferred\" value=$row[22]>";
                     
                     echo "<br>";
                     echo "<br>";
