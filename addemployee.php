@@ -14,7 +14,18 @@
                 <tr><td>Name:</td><td><input type="Text" name="name"</td></tr>
                 <tr><td>User Name:</td><td><input type="Text" name="user_name"</td></tr>
 				<tr><td>Password:</td><td><input type="Text" name="password"</td></tr>
-                <tr><td>User Level:</td><td><input type="Text" name="user_level"</td></tr>				
+                <tr><TD class = "select">User Level:         
+    </TD>   
+    <TD>
+       <select name = "user_level">        
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+			<option value="5">5</option>
+       </select>
+    </TD>        
+</TR>				
             </table>
             <input type="submit" name="Submit" value="Next">
 			<input type="button" value="Cancel" id=button1 name=button1 onclick="go_home()">
