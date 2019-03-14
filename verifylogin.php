@@ -160,7 +160,23 @@
             $value= $_POST['value'];
 			$query = "DELETE FROM functional_and_prog WHERE id = '".$value."'";
 			mysqli_query($con, $query);
-		}		
+		}
+		 function VerifyCreateArea() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$name = $_POST['name'];
+			$query = "SELECT * FROM functional_area WHERE department_name = '".$name."'";
+			$result = mysqli_query($con, $query);
+			$rowcount=mysqli_num_rows($result); 
+			if ($rowcount != 0) {
+				echo 0;
+			}
+			else {
+				$query = "INSERT INTO functional_area (department_name) VALUES ('".$name."')";
+				mysqli_query($con, $query);
+				echo 1;
+			}
+		 }		
 		
          echo $_POST["method"]();
 ?>
