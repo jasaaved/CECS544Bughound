@@ -125,7 +125,8 @@
 			}
 			
 			function go_home(){
-                window.location.replace("index.phpindex.php?<?php echo $var_name; ?>");
+                var usrname = getQueryVariable("user_name");
+                window.location.replace("viewemployees.php?user_name="+usrname);
             }
 </script>
     </body>
