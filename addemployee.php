@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -9,7 +10,7 @@
 		<?php
 			$var = $_GET['user_name'];
 		?>
-        <form action="submitemployeeinfo.php?user_name=<?php echo $var; ?>" method="post" onsubmit="return validate(this)">
+        <form action="viewemployees.php?user_name=<?php echo $var; ?>" method="post" onsubmit="return validate(this)">
             <table>
                 <tr><td>Name:</td><td><input type="Text" name="name"</td></tr>
                 <tr><td>User Name:</td><td><input type="Text" name="user_name"</td></tr>
@@ -27,7 +28,7 @@
     </TD>        
 </TR>				
             </table>
-            <input type="submit" name="Submit" value="Next">
+            <input type="submit" name="Submit" value="Submit">
 			<input type="button" value="Cancel" id=button1 name=button1 onclick="go_home()">
         </form>
 	<p>
@@ -52,7 +53,8 @@
                     alert ("User level field must contain characters");
                     return false;
                 }
-                return true;
+				ajax =  do_ajax(theform.name.value, theform.user_name.value, theform.password.value, theform.user_level.value);
+				return false;
             }
 			function getQueryVariable(variable)
 			{
@@ -64,9 +66,33 @@
 				   }
 				   return(false);
 			}
+			
+			function do_ajax(name, user_name, password, user_level){
+				return theAjax("VerifyAddEmployee", name, user_name, password, user_level);
+			}
+			
+			function theAjax(method, name, user_name, password, user_level){
+				return $.ajax({
+					url: 'verifylogin.php',
+					type: 'POST',
+					data: {method: method, name: name, user_name: user_name, password: password, user_level: user_level},
+					success: function(data){
+						if (data == 0){
+							alert("Username already exists");
+						}
+						
+						else{
+							var usrname = getQueryVariable("user_name");
+							document.location.href="viewemployees.php?user_name="+usrname;
+						}
+
+					}
+
+				});
+			}
 			function go_home(){
 				var usrname = getQueryVariable("user_name");
-                window.location.replace("index.php?user_name="+usrname);
+                window.location.replace("viewemployees.php?user_name="+usrname);
             }
 </script>
     </body>

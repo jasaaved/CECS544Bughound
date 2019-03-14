@@ -7,6 +7,7 @@
     </head>
     <body>
         <?php
+			$var = $_GET['user_name'];
 			$con = mysqli_connect("localhost","root");
 			mysqli_select_db($con, "bughound");
 			$query = "SELECT name, version_number, release_number FROM program";
@@ -16,7 +17,10 @@
 			while($row=mysqli_fetch_row($result))
 			{
 				$none=1;
-				printf("<tr><td>%s</td><td>%s</td><td>%s</td></tr>\n",$row[0],$row[1],$row[2]);
+				$prog_name = $row[0];
+				$version_number = $row[1];
+				$release_number = $row[2];
+				printf("<tr><td><A href=\"editprograms.php?user_name=$var&prog_name=$prog_name&version_number=$version_number&release_number=$release_number\">%s</a></td><td>%s</td><td>%s</td></tr>\n",$row[0],$row[1],$row[2]);
 			}
         ?>
         </table>
