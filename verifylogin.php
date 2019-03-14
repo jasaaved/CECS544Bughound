@@ -160,7 +160,53 @@
             $value= $_POST['value'];
 			$query = "DELETE FROM functional_and_prog WHERE id = '".$value."'";
 			mysqli_query($con, $query);
-		}		
+		}
+		 function VerifyCreateArea() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$name = $_POST['name'];
+			$query = "SELECT * FROM functional_area WHERE department_name = '".$name."'";
+			$result = mysqli_query($con, $query);
+			$rowcount=mysqli_num_rows($result); 
+			if ($rowcount != 0) {
+				echo 0;
+			}
+			else {
+				$query = "INSERT INTO functional_area (department_name) VALUES ('".$name."')";
+				mysqli_query($con, $query);
+				echo 1;
+			}
+		 }
+		function VerifyUpdateArea() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$ID = $_POST['ID'];
+			$name = $_POST['name'];
+			$query = "SELECT * FROM functional_area WHERE department_name = '".$name."' AND id <> '".$ID."'";
+			$result = mysqli_query($con, $query);
+			$rowcount=mysqli_num_rows($result); 
+			if ($rowcount != 0) {
+				echo 0;
+			}
+			else {
+				$query = "INSERT INTO functional_area (id, department_name) VALUES ('".$ID."','".$name."') ON DUPLICATE KEY UPDATE department_name=VALUES(department_name)";
+				mysqli_query($con, $query);
+				$query = "UPDATE functional_and_prog SET funcname = '".$name."' WHERE funcid = '".$ID."'";
+				mysqli_query($con, $query);
+				echo 1;
+			}
+		 }
+		 function VerifyDeleteArea() {
+			$con = mysqli_connect("localhost","root");
+		    mysqli_select_db($con, "bughound");
+			$ID = $_POST['ID'];
+			$query = "DELETE FROM functional_and_prog WHERE funcid = '".$ID."'";
+			mysqli_query($con, $query);
+			$query = "UPDATE bug_report SET functional_areaId = NULL WHERE functional_areaId = '".$ID."'";
+			mysqli_query($con, $query);
+			$query = "DELETE FROM functional_area WHERE id = '".$ID."'";
+			mysqli_query($con, $query);
+		 }		 
 		
          echo $_POST["method"]();
 ?>
