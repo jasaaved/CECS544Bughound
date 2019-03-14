@@ -5,16 +5,6 @@
         <meta charset="UTF-8">
         <title>Bug Search Page</title>
         
-            <style>
-                div.vertical-center {
-                  display:flex;
-                  align-items:center;
-                }
-
-                div.bottom-border{
-                        border-bottom: 2px solid gray;
-                }
-            </style>
     </head>
     <body>
         <?php
@@ -35,7 +25,7 @@
 
                             while($row=mysqli_fetch_row($result))
                             {
-                                    echo "<option value=$row[0]>$row[1]</option>";
+                                    echo "<option value=$row[0]>$row[1] v" . $row[2] . "</option>";
                             }
                     ?>
                 </select>
@@ -119,7 +109,6 @@
                         
                         <label for="status">Status:</label>
 			<select name="status">
-                            <option value=null></option>
                             <?php
                                 $query = "SELECT TRIM(TRAILING ')' FROM TRIM(LEADING '(' FROM TRIM(LEADING 'enum' FROM column_type))) column_type FROM information_schema.columns WHERE table_name = 'bug_report' AND column_name = 'status'";
 

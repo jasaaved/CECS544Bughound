@@ -14,9 +14,8 @@
 	<h3>
 	<A href="newbug.php?user_name=<?php echo $var; ?>"><span class=\"linkline\">Create New Bug Report</span></a> 
 	<span class="tab"></span></p>
-	<A href="viewemployees.php?user_name=<?php echo $var; ?>"><span class=\"linkline\">Bug Search</span></a>
-	<span class="tab"></span></p>
-	<A href="viewprograms.php?user_name=<?php echo $var; ?>"><span class=\"linkline\">View/Update Bug Reports</span></a>
+	<A href="bugsearch.php?user_name=<?php echo $var; ?>"><span class=\"linkline\">Bug Search</span></a>
+        <span class="tab"></span></p>
 	</h3>
 	</p>
         <script language=Javascript>

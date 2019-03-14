@@ -25,7 +25,7 @@
                 <tr><td>User Level:</td><td><input type="Text" name="user_level" value="<?php echo $row[4]; ?>"></td></tr>				
             </table>
             <input type="submit" name="Submit" value="Next">
-			<input type="button" value="Cancel" id=button1 name=button1 onclick="go_home()">
+            <input type="button" value="Cancel" id=button1 name=button1 onclick="go_home()">
         </form>
 		
 	<p>
@@ -53,7 +53,7 @@
                 return true;
             }
 			function go_home(){
-                window.location.replace("index.php");
+                window.location.replace("index.php?<?php echo $var_name; ?>");
             }
 </script>
     </body>

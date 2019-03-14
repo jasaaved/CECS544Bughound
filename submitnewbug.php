@@ -10,6 +10,7 @@
 		<?php
                     function build_query()
                     {
+                        $username = $_GET['user_name'];
                         $program = $_POST['program'];
                         $report_type = $_POST['report_type'];
                         $severity = $_POST['severity'];
@@ -155,8 +156,7 @@
 	</body>
         <script language=Javascript>
                 function go_home(){
-                        var usrname = getQueryVariable("user_name");
-                window.location.replace("index.php?user_name="+usrname);
+                window.location.replace("index.php?user_name=<?php echo $username?>");
             }
         </script>
 

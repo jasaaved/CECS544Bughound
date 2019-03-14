@@ -34,7 +34,7 @@
 						
 						while($row=mysqli_fetch_row($result))
 						{
-							echo "<option value=$row[0]>$row[1]</option>";
+							echo "<option value=$row[0]>$row[1] v" . $row[2] . "</option>";
 						}
 					?>
 				</select>
@@ -152,14 +152,13 @@
                         <label for="assigned_to">Assigned To:</label>
 			<?php
                             $username = $_GET['user_name'];
-                            $query = "SELECT * FROM employees WHERE user_name='$username'";
+                            $query = "SELECT * FROM employee WHERE user_name='".$username."';";
                             
                             $result = mysqli_query($con, $query);
                             $row = mysqli_fetch_row($result);
-                            
                             $user_level = $row[4];
                             
-                            if ($user_level !== 5)
+                            if ($user_level !== '5')
                             {
                                 echo "<select name=\"assigned_to\" disabled>";
                             }
@@ -214,7 +213,7 @@
 			<label for="priority">Priority:</label>
                         
                         <?php
-                            if ($user_level !== 5)
+                            if ($user_level !== '5')
                             {
                                 echo "<select name=\"priority\" disabled>";
                             }
@@ -371,8 +370,8 @@
                 return true;
             }
 		
-            function go_home(){
-                window.location.replace("index.php");
+                function go_home(){
+                window.location.replace("index.php?user_name=<?php echo $username?>");
             }
         </script>
 	
