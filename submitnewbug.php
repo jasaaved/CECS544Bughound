@@ -36,7 +36,7 @@
 
                         $insert = "INSERT INTO bug_report (programId, report_type, severity, problem_summary, reproducible, problem, reported_by_employeeId, reported_date";
 
-                        $values = ") VALUES ('".$program."','".$report_type."','".$severity."','".$problem_summary."','".$reproducible."','".$problem."','".$reported_by."', '".$date."'";
+                        $values = ") VALUES ('".$program."','".$report_type."','".$severity."',\"".$problem_summary."\",'".$reproducible."',\"".$problem."\",'".$reported_by."', '".$date."'";
 
                         if ($attachment !== "")
                         {
@@ -72,7 +72,7 @@
                         if ($suggested_fix !== "")
                         {
                             $insert .= ", suggested_fix";
-                            $values .= ",'".$suggested_fix."'";
+                            $values .= ",\"".$suggested_fix."\"";
                         }
                         if ($functional_area !== "null")
                         {
@@ -87,7 +87,7 @@
                         if ($comments !== "")
                         {
                             $insert .= ", comments";
-                            $values .= ",'".$comments."'";
+                            $values .= ",\"".$comments."\"";
                         }
                         if ($status !== "null")
                         {

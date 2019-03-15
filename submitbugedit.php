@@ -35,14 +35,14 @@
                         $attachment = "";
                         $treat_as_deferred = $_POST['treat_as_deferred'];
                         
-                        $update = "UPDATE bug_report SET programId='".$program."', report_type='".$report_type."', severity='".$severity."', problem_summary='".$problem_summary."', reproducible='".$reproducible."', problem='".$problem."', reported_by_employeeId='".$reported_by."', reported_date='".$date."'";
+                        $update = "UPDATE bug_report SET programId='".$program."', report_type='".$report_type."', severity='".$severity."', problem_summary=\"".$problem_summary."\", reproducible='".$reproducible."', problem=\"".$problem."\", reported_by_employeeId='".$reported_by."', reported_date='".$date."'";
                         $where = " WHERE id='" . $bug_id . "';";
                         
 
-                            $update .= ", suggested_fix='".$suggested_fix."'";
+                            $update .= ", suggested_fix=\"".$suggested_fix."\"";
                             $update .= ", functional_areaId=".$functional_area."";
                             $update .= ", assigned_to_employeeId='".$assigned_to."'";
-                            $update .= ", comments='".$comments."'";
+                            $update .= ", comments=\"".$comments."\"";
                             $update .= ", status='".$status."'";
                             $update .= ", priority='".$priority."'";
                             $update .= ", resolution='".$resolution."'";
