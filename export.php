@@ -69,7 +69,7 @@
 					type: 'POST',
 					data: {method: method, database:database, format:format},
 					success: function(data){
-						alert(data);
+						alert("File has been downloaded, check your folder");
 
 					}
 
