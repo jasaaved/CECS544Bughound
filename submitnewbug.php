@@ -8,9 +8,9 @@
 	<body>
 		<h1>Bug Submitted</h1>
 		<?php
+                    $username = $_GET['user_name'];
                     function build_query()
                     {
-                        $username = $_GET['user_name'];
                         $program = $_POST['program'];
                         $report_type = $_POST['report_type'];
                         $severity = $_POST['severity'];
@@ -34,9 +34,9 @@
                         $attachment = $_FILES['file_name']['name'];
                         $treat_as_deferred = $_POST['treat_as_deferred'];
 
-                        $insert = "INSERT INTO bug_report (programId, report_type, severity, problem_summary, reproducible, problem, suggested_fix, reported_by_employeeId, reported_date";
+                        $insert = "INSERT INTO bug_report (programId, report_type, severity, problem_summary, reproducible, problem, reported_by_employeeId, reported_date";
 
-                        $values = ") VALUES ('".$program."','".$report_type."','".$severity."','".$problem_summary."','".$reproducible."','".$problem."','".$suggested_fix."','".$reported_by."', '".$date."'";
+                        $values = ") VALUES ('".$program."','".$report_type."','".$severity."',\"".$problem_summary."\",'".$reproducible."',\"".$problem."\",'".$reported_by."', '".$date."'";
 
                         if ($attachment !== "")
                         {
@@ -69,6 +69,11 @@
                             $insert .= ", attachmentId";
                             $values .= ",'".$row[0]."'";
                         }
+                        if ($suggested_fix !== "")
+                        {
+                            $insert .= ", suggested_fix";
+                            $values .= ",\"".$suggested_fix."\"";
+                        }
                         if ($functional_area !== "null")
                         {
                             $insert .= ", functional_areaId";
@@ -82,7 +87,7 @@
                         if ($comments !== "")
                         {
                             $insert .= ", comments";
-                            $values .= ",'".$comments."'";
+                            $values .= ",\"".$comments."\"";
                         }
                         if ($status !== "null")
                         {
@@ -137,7 +142,6 @@
 
 
                     $query = build_query();
-                    echo $query;
 
                     $con = mysqli_connect("localhost","root");
                     if ($con->connect_error) {
@@ -151,8 +155,10 @@
                         echo "Error: " . $query . "<br>" . $con->error;
                     }
                 ?>
-                
-            <input type="button" value="Cancel" id=button1 name=button1 onclick="go_home()">
+                <form action="index.php?user_name=<?php echo $username?>" method="post">
+                    <input type="Submit" value="Return to Home">
+                </form>
+            
 	</body>
         <script language=Javascript>
                 function go_home(){

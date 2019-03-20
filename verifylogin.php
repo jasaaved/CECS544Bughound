@@ -15,13 +15,11 @@
 			else {
 				$row = mysqli_fetch_row($result);
 				if ($row[3] != $password){
-					echo 1;
+					echo -1;
 				}
-				
 				else if ($row[4] == 0){
 					echo 0;
 				}
-				
 				else{
 					echo -1;
 				}

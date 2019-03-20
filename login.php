@@ -64,11 +64,10 @@
 						if (data == 0){
 							alert("User name does not exist");
 						}
-						
-						else if (data == 1){
-							alert("Password is incorrect");
-						}
-						
+                                                else if(data == -1)
+                                                {
+                                                    alert("incorrect password");
+                                                }
 						else{
 							document.location.href="index.php?user_name="+user_name;
 						}
