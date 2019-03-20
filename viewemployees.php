@@ -12,7 +12,7 @@
 			mysqli_select_db($con, "bughound");
 			$query = "SELECT id, name, user_level FROM employee";
 			$result = mysqli_query($con, $query); 
-			echo "<table border=1 ><th>EMP ID</th><th> Name</Th>\n";
+			echo "<table border=1 ><th>EMP ID</th><th> Name</Th><th> User Level</Th>\n";
 			$none = 0;
 			while($row=mysqli_fetch_row($result))
 			{
@@ -21,7 +21,7 @@
 				$user_level = $row[2];
 				if ($user_level != 0){
 					$var_name;
-					printf("<tr><td><A href=\"editemployee.php?user_name=$var&var_name=$id\">%d</a></td><td>%s</td></tr>\n",$row[0], $row[1]);
+					printf("<tr><td><A href=\"editemployee.php?user_name=$var&var_name=$id\">%d</a></td><td>%s</td><td>%s</td></tr>\n",$row[0], $row[1], $row[2]);
 				}
 			}
         ?>

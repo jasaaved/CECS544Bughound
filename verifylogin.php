@@ -1,7 +1,6 @@
 <?php
          /* Defining a PHP Function */
 		 
-		 
          function VerifyLogin() {
 			$con = mysqli_connect("localhost","root");
 		    mysqli_select_db($con, "bughound");
@@ -24,7 +23,7 @@
 				}
 				
 				else{
-					echo $row[4];
+					echo -1;
 				}
 			}
 		
@@ -444,9 +443,133 @@
 				fclose($fh);
 				
 			}
+			else if ($database_number == 7 && $format == 2){
+				$query = "SELECT * FROM attachment";
+			    $result=mysqli_query($con, $query);
+				$attachmentsArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($attachmentsArray, $row);
+					
+				}
+				
+				if(count($attachmentsArray)){
+					createXMLfileatt($attachmentsArray);
+				}
+
+			}
+			
+			else if ($database_number == 6 && $format == 2){
+				$query = "SELECT * FROM employee";
+			    $result=mysqli_query($con, $query);
+				$employeeArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($employeeArray, $row);
+					
+				}
+				
+				if(count($employeeArray)){
+					createXMLfilee($employeeArray);
+				}
+
+			}
+			
+			else if ($database_number == 5 && $format == 2){
+				$query = "SELECT * FROM functional_and_prog";
+			    $result=mysqli_query($con, $query);
+				$FPArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($FPArray, $row);
+					
+				}
+				
+				if(count($FPArray)){
+					createXMLfileFP($FPArray);
+				}
+
+			}
 			
 			
-		}		
+				
+			
+		}
+
+		function createXMLfileatt($attachmentsArray){
+  
+			   $filePath = 'attaments.xml';
+			   $dom     = new DOMDocument('1.0', 'utf-8'); 
+			   $root      = $dom->createElement('attachments'); 
+			   for($i=0; $i<count($attachmentsArray); $i++){
+				 
+				 $attachmentsId        =  $attachmentsArray[$i]['id'];  
+				 $attachmentName      =   $attachmentsArray[$i]['name'];
+				   
+				 $attachment = $dom->createElement('attachment');
+				 $attachment->setAttribute('id', $attachmentsId);
+				 $name     = $dom->createElement('name', $attachmentName); 
+				 $attachment->appendChild($name); 
+ 
+				 
+				 $root->appendChild($attachment);
+   }
+   $dom->appendChild($root); 
+   $dom->save($filePath); 
+ }
+
+		function createXMLfilee($employeeArray){
+  
+			   $filePath = 'employee.xml';
+			   $dom     = new DOMDocument('1.0', 'utf-8'); 
+			   $root      = $dom->createElement('attachments'); 
+			   for($i=0; $i<count($employeeArray); $i++){
+				 
+				 $employeeId        =  $employeeArray[$i]['id'];  
+				 $employeeName      =  $employeeArray[$i]['name'];
+				 $employeeUserName =  $employeeArray[$i]['user_name'];
+				 $employeePassword = $employeeArray[$i]['password'];
+				 $employeelevel = $employeeArray[$i]['user_level'];
+				 $employee = $dom->createElement('employee');
+				 $employee->setAttribute('id', $employeeId);
+				 $name     = $dom->createElement('name', $employeeName); 
+				 $employee->appendChild($name); 
+				 $username = $dom->createElement('user_name', $employeeUserName);
+				 $employee->appendChild($username);
+				 $password = $dom->createElement('password', $employeePassword); 
+				 $employee->appendChild($password);
+				 $level = $dom->createElement('user_level', $employeelevel);
+				 $employee->appendChild($password);
+				 $root->appendChild($employee);
+   }
+   $dom->appendChild($root); 
+   $dom->save($filePath); 
+ }
+
+		function createXMLfileFP($FPArray){
+  
+			   $filePath = 'FP.xml';
+			   $dom     = new DOMDocument('1.0', 'utf-8'); 
+			   $root      = $dom->createElement('attachments'); 
+			   for($i=0; $i<count($FPArray); $i++){
+				 
+				 $FPId        =  $FPArray[$i]['id'];  
+				 $FPName      =  $FPArray[$i]['name'];
+				 $FPUserName =  $FPrray[$i]['user_name'];
+				 $employeePassword = $employeeArray[$i]['password'];
+				 $employeelevel = $employeeArray[$i]['user_level'];
+				 $employee = $dom->createElement('employee');
+				 $employee->setAttribute('id', $employeeId);
+				 $name     = $dom->createElement('name', $employeeName); 
+				 $employee->appendChild($name); 
+				 $username = $dom->createElement('user_name', $employeeUserName);
+				 $employee->appendChild($username);
+				 $password = $dom->createElement('password', $employeePassword); 
+				 $employee->appendChild($password);
+				 $level = $dom->createElement('user_level', $employeelevel);
+				 $employee->appendChild($password);
+				 $root->appendChild($employee);
+   }
+   $dom->appendChild($root); 
+   $dom->save($filePath); 
+ }  
 		
          echo $_POST["method"]();
 ?>
