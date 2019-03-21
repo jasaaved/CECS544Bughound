@@ -68,8 +68,15 @@
 							$('<h3><a href="'+areas_link+'"><span class=\"linkline\">Add/Remove Functional Areas From Programs</span></a></h3>').appendTo($('body'));
 							$('<h3><a href="'+export_link+'"><span class=\"linkline\">Export</span></a></h3>').appendTo($('body'));
 							$('<h3><a target="_blank" href="'+database_maintenance+'"><span class=\"linkline\">Database Maintenance</span></a></h3>').appendTo($('body'));
+							var logout = "logout.php";
+							$('<h3><a href="'+logout+'"><span class=\"linkline\">Log Out</span></a></h3>').appendTo($('body'));
 							
-							
+						}
+						
+						else{
+							var logout = "logout.php";
+							$('<h3><a href="'+logout+'"><span class=\"linkline\">Log Out</span></a></h3>').appendTo($('body'));
+
 						}
 
 					}
