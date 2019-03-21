@@ -19,6 +19,16 @@
 		<?php
 			$con = mysqli_connect("localhost","root");
 			mysqli_select_db($con, "bughound");
+		    $var = $_GET['user_name'];
+			
+			session_start();
+			if ($var == NULL ||!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false || $_SESSION['username'] != $var) 
+			{
+				$message = "Please Login First";
+				echo "<script type='text/javascript'>alert('$message');window.location.href='login.php';</script>";
+				session_destroy();
+				
+			}
                         
                         $username = $_GET['user_name'];
                         $bug_id = $_POST['bug_id'];

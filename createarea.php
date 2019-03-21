@@ -8,6 +8,15 @@
         <h1>Add Functional Area</h1>
 		<?php
 			$var = $_GET['user_name'];
+			
+			session_start();
+			if ($var == NULL ||!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false || $_SESSION['username'] != $var) 
+			{
+				$message = "Please Login First";
+				echo "<script type='text/javascript'>alert('$message');window.location.href='login.php';</script>";
+				session_destroy();
+				
+			}
 		?>
         <form action="viewareas.php?user_name=<?php echo $var; ?>" method="post" onsubmit="return validate(this)">
             <table>

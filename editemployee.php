@@ -11,6 +11,15 @@
 		<?php
 			$var = $_GET['var_name'];
 			$var_name = $_GET['user_name'];
+			
+			session_start();
+			if ($var_name == NULL ||!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false || $_SESSION['username'] != $var_name) 
+			{
+				$message = "Please Login First";
+				echo "<script type='text/javascript'>alert('$message');window.location.href='login.php';</script>";
+				session_destroy();
+				
+			}
 			$con = mysqli_connect("localhost","root");
 			mysqli_select_db($con, "bughound");
 			$query = "SELECT * FROM employee WHERE id = $var";

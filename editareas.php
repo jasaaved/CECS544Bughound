@@ -10,6 +10,16 @@
 			$name = $_GET['prog_name'];
 			$version_number = $_GET['version_number'];
 			$release_number = $_GET['release_number'];
+			$var = $_GET['user_name'];
+			
+			session_start();
+			if ($var == NULL ||!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false || $_SESSION['username'] != $var) 
+			{
+				$message = "Please Login First";
+				echo "<script type='text/javascript'>alert('$message');window.location.href='login.php';</script>";
+				session_destroy();
+				
+			}
 			
 ?>
 	 <h2>Functional Areas in <?php echo $name; ?> Version <?php echo $version_number; ?> Release <?php echo $release_number; ?></h2>

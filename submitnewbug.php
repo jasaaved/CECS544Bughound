@@ -8,6 +8,16 @@
 	<body>
 		<h1>Bug Submitted</h1>
 		<?php
+					$var = $_GET['user_name'];
+			
+					session_start();
+					if ($var == NULL ||!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false || $_SESSION['username'] != $var) 
+					{
+						$message = "Please Login First";
+						echo "<script type='text/javascript'>alert('$message');window.location.href='login.php';</script>";
+						session_destroy();
+						
+					} 
                     $username = $_GET['user_name'];
                     function build_query()
                     {

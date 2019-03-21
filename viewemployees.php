@@ -7,6 +7,16 @@
     </head>
     <body>
         <?php
+			$var = $_GET['user_name'];
+			
+			session_start();
+			if ($var == NULL ||!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false || $_SESSION['username'] != $var) 
+			{
+				$message = "Please Login First";
+				echo "<script type='text/javascript'>alert('$message');window.location.href='login.php';</script>";
+				session_destroy();
+				
+			} 
 			$con = mysqli_connect("localhost","root");
 			$var = $_GET['user_name'];
 			mysqli_select_db($con, "bughound");
