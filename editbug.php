@@ -72,11 +72,11 @@
 						{
                                                         if ($row[0] === $program)
                                                         {
-                                                            echo "<option value=$row[0] selected>$row[1] v" . $row[2] . "</option>";
+                                                            echo "<option value=$row[0] selected>$row[1] v" . $row[3] . "." . $row[2] . "</option>";
                                                         }
                                                         else
                                                         {
-                                                            echo "<option value=$row[0]>$row[1] v" . $row[2] . "</option>";
+                                                            echo "<option value=$row[0]>$row[1] v" . $row[3] . "." . $row[2] . "</option>";
                                                         }
 							
 						}

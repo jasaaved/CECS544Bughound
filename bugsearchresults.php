@@ -140,7 +140,7 @@
                     echo "<table style=\"width:50%\">";
                     echo "<tr>";
                     echo "<td>Program: </td>";
-                    echo "<td>".$p_row[1] . " v" . $p_row[2]."</td>";
+                    echo "<td>".$p_row[1] . " v" . $p_row[3] .".". $p_row[2] ."</td>";
                     echo "</tr>";
                     echo "<tr>";
                     echo "<td>Report Type: </td>";
