@@ -65,7 +65,7 @@
 							$('<h3><a href="'+view_edit_link+'"><span class=\"linkline\">View/Add/Edit Employee</span></a></h3>').appendTo($('body'));
 							$('<h3><a href="'+programs_link+'"><span class=\"linkline\">View/Add/Edit Programs</span></a></h3>').appendTo($('body'));
 							$('<h3><a href="'+main_areas_link+'"><span class=\"linkline\">View/Add/Edit Functional Areas</span></a></h3>').appendTo($('body'));
-							$('<h3><a href="'+areas_link+'"><span class=\"linkline\">Add/Remove Functional Areas From Programs</span></a></h3>').appendTo($('body'));
+							$('<h3><a href="'+areas_link+'"><span class=\"linkline\">Add/Remove Functional Areas in Programs</span></a></h3>').appendTo($('body'));
 							$('<h3><a href="'+export_link+'"><span class=\"linkline\">Export</span></a></h3>').appendTo($('body'));
 							$('<h3><a target="_blank" href="'+database_maintenance+'"><span class=\"linkline\">Database Maintenance</span></a></h3>').appendTo($('body'));
 							var logout = "logout.php";

@@ -490,6 +490,21 @@
 
 			}
 			
+			else if ($database_number == 4 && $format == 2){
+				$query = "SELECT * FROM functional_area";
+			    $result=mysqli_query($con, $query);
+				$FAArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($FAArray, $row);
+					
+				}
+				
+				if(count($FAArray)){
+					createXMLfileFA($FAArray);
+				}
+
+			}
+			
 			
 				
 			
@@ -547,31 +562,50 @@
 
 		function createXMLfileFP($FPArray){
   
-			   $filePath = 'FP.xml';
+			   $filePath = 'FunctionalAreasinPrograms.xml';
 			   $dom     = new DOMDocument('1.0', 'utf-8'); 
 			   $root      = $dom->createElement('attachments'); 
 			   for($i=0; $i<count($FPArray); $i++){
 				 
 				 $FPId        =  $FPArray[$i]['id'];  
-				 $FPName      =  $FPArray[$i]['name'];
-				 $FPUserName =  $FPrray[$i]['user_name'];
-				 $employeePassword = $employeeArray[$i]['password'];
-				 $employeelevel = $employeeArray[$i]['user_level'];
-				 $employee = $dom->createElement('employee');
-				 $employee->setAttribute('id', $employeeId);
-				 $name     = $dom->createElement('name', $employeeName); 
-				 $employee->appendChild($name); 
-				 $username = $dom->createElement('user_name', $employeeUserName);
-				 $employee->appendChild($username);
-				 $password = $dom->createElement('password', $employeePassword); 
-				 $employee->appendChild($password);
-				 $level = $dom->createElement('user_level', $employeelevel);
-				 $employee->appendChild($password);
-				 $root->appendChild($employee);
+				 $FPProgId      =  $FPArray[$i]['progid'];
+				 $FPFuncName =  $FPrray[$i]['funcname'];
+				 $FPFuncId = $FPArray[$i]['funcid'];
+
+				 $FP = $dom->createElement('FP');
+				 $FP->setAttribute('id', $FPId);
+				 $ProgId = $dom->createElement('progid', $FPProgId);
+				 $FP->appendChild($ProgId); 
+				 $FuncName = $dom->createElement('funcname', $FPFuncName);
+				 $FP->appendChild($FuncName);
+				 $FuncId = $dom->createElement('funcid', $FPFuncId); 
+				 $FP->appendChild($FuncId);
+				 $root->appendChild($FP);
 				}
 			   $dom->appendChild($root); 
 			   $dom->save($filePath); 
-		}  
+		}
+
+		function createXMLfileFA($FAArray){
+  
+			   $filePath = 'FunctionalAreas.xml';
+			   $dom     = new DOMDocument('1.0', 'utf-8'); 
+			   $root      = $dom->createElement('attachments'); 
+			   for($i=0; $i<count($FAArray); $i++){
+				 
+				 $FAId        =  $FAArray[$i]['id'];  
+				 $FADepartmentName      =  $FAArray[$i]['department_name'];
+
+
+				 $FA = $dom->createElement('FA');
+				 $FA->setAttribute('id', $FAId);
+				 $DepartmentName = $dom->createElement('department_name', $FADepartmentName);
+				 $FA->appendChild($DepartmentName); 
+				 $root->appendChild($FA);
+				}
+			   $dom->appendChild($root); 
+			   $dom->save($filePath); 
+		}		
 		
          echo $_POST["method"]();
 ?>
