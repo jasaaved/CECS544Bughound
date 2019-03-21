@@ -21,7 +21,11 @@
 					echo 0;
 				}
 				else{
-					echo -1;
+					session_start();
+					$_SESSION['loggedin'] = true;
+					$_SESSION['username'] = $user_name;
+					
+					echo 5;
 				}
 			}
 		
@@ -508,10 +512,10 @@
  
 				 
 				 $root->appendChild($attachment);
-   }
-   $dom->appendChild($root); 
-   $dom->save($filePath); 
- }
+			   }
+			   $dom->appendChild($root); 
+			   $dom->save($filePath); 
+			 }
 
 		function createXMLfilee($employeeArray){
   
@@ -536,10 +540,10 @@
 				 $level = $dom->createElement('user_level', $employeelevel);
 				 $employee->appendChild($password);
 				 $root->appendChild($employee);
-   }
-   $dom->appendChild($root); 
-   $dom->save($filePath); 
- }
+				}
+		   $dom->appendChild($root); 
+		   $dom->save($filePath); 
+		}
 
 		function createXMLfileFP($FPArray){
   
@@ -564,10 +568,10 @@
 				 $level = $dom->createElement('user_level', $employeelevel);
 				 $employee->appendChild($password);
 				 $root->appendChild($employee);
-   }
-   $dom->appendChild($root); 
-   $dom->save($filePath); 
- }  
+				}
+			   $dom->appendChild($root); 
+			   $dom->save($filePath); 
+		}  
 		
          echo $_POST["method"]();
 ?>
