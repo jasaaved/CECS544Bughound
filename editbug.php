@@ -282,30 +282,29 @@
 			
 			<label for="status">Status:</label>
 			<select name="status">
-					<option value=null></option>
-					<?php
-						$query = "SELECT TRIM(TRAILING ')' FROM TRIM(LEADING '(' FROM TRIM(LEADING 'enum' FROM column_type))) column_type FROM information_schema.columns WHERE table_name = 'bug_report' AND column_name = 'status'";
-						
-						if ($result = mysqli_query($con, $query))
-						{
-							$row=mysqli_fetch_row($result);
-							$enum=explode(',',$row[0]);
-							
-							for ($i=0; $i < sizeOf($enum); $i++)
-							{
-								$str = str_replace('\'', '', $enum[$i]);
-								$val = $i+1;
-                                                                if ($str === $status)
-                                                                {
-                                                                    echo "<option value=$val selected>$str</option>";
-                                                                }
-                                                                else
-                                                                {
-                                                                    echo "<option value=$val>$str</option>";
-                                                                }
-							}
-						}
-					?>
+                            <?php
+                                    $query = "SELECT TRIM(TRAILING ')' FROM TRIM(LEADING '(' FROM TRIM(LEADING 'enum' FROM column_type))) column_type FROM information_schema.columns WHERE table_name = 'bug_report' AND column_name = 'status'";
+
+                                    if ($result = mysqli_query($con, $query))
+                                    {
+                                            $row=mysqli_fetch_row($result);
+                                            $enum=explode(',',$row[0]);
+
+                                            for ($i=0; $i < sizeOf($enum); $i++)
+                                            {
+                                                    $str = str_replace('\'', '', $enum[$i]);
+                                                    $val = $i+1;
+                                                    if ($str === $status)
+                                                    {
+                                                        echo "<option value=$val selected>$str</option>";
+                                                    }
+                                                    else
+                                                    {
+                                                        echo "<option value=$val>$str</option>";
+                                                    }
+                                            }
+                                    }
+                            ?>
 			</select>
 			
 			<label for="priority">Priority:</label>

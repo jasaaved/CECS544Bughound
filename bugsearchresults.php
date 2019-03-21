@@ -72,7 +72,16 @@
             $resolution = $_POST['resolution'];
             $resolved_by = $_POST['resolved_by'];
             
-            $query = "SELECT * FROM bug_report WHERE status=".$status;
+            $query = "SELECT * FROM bug_report";
+            
+            if ($status !== "null")
+            {
+                $query .= " WHERE status=".$status;
+            }
+            else
+            {
+                $query .= " WHERE id>=0";
+            }
             
             if ($program !== "null")
             {
@@ -147,7 +156,15 @@
                     echo "</tr>";
                     echo "<tr>";
                     echo "<td>Reproducible? </td>";
-                    echo "<td>$row[5]</td>";
+                    if ($row[5] == 1)
+                    {
+                        echo "<td>Yes</td>";
+                    }
+                    else
+                    {
+                        echo "<td>No</td>";
+                    }
+                    //echo "<td>$row[5]</td>";
                     echo "</tr>";
                     echo "<tr>";
                     echo "<td>Problem: </td>";
@@ -271,10 +288,24 @@
                     
                     echo "<tr>";
                     echo "<td>Treat as Deferred?  </td>";
-                    echo "<td>$row[22]</td>";
+                    if ($row[22] == 1)
+                    {
+                        echo "<td>Yes</td>";
+                    }
+                    else
+                    {
+                        echo "<td>No</td>";
+                    }
+                    
                     echo "</tr>";
                     
                     echo "</table>";
+                    
+                    //$row[4] = mysqli_real_escape_string($con, $row[4]);
+                    $row[4] = htmlspecialchars($row[4]);
+                    $row[6] = htmlspecialchars($row[6]);
+                    $row[7] = htmlspecialchars($row[7]);
+                    $row[13] = htmlspecialchars($row[13]);
                     
                     echo "<form action=\"editbug.php?user_name=$username\" method=\"post\" >";
                     echo "<input type=\"hidden\" name=\"bug_id\" value=$row[0]>";

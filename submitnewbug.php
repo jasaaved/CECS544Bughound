@@ -21,6 +21,12 @@
                     $username = $_GET['user_name'];
                     function build_query()
                     {
+                        $con = mysqli_connect("localhost","root");
+                        if ($con->connect_error) {
+                            die("Connection failed: " . $con->connect_error);
+                        } 
+                        mysqli_select_db($con, "bughound");
+                        
                         $program = $_POST['program'];
                         $report_type = $_POST['report_type'];
                         $severity = $_POST['severity'];
@@ -43,10 +49,15 @@
                         $tested_date = $_POST['tested_date'];
                         $attachment = $_FILES['file_name']['name'];
                         $treat_as_deferred = $_POST['treat_as_deferred'];
+                        
+                        $problem_summary = mysqli_real_escape_string($con, $problem_summary);
+                        $problem = mysqli_real_escape_string($con, $problem);
+                        $suggested_fix = mysqli_real_escape_string($con, $suggested_fix);
+                        $comments = mysqli_real_escape_string($con, $comments);
 
                         $insert = "INSERT INTO bug_report (programId, report_type, severity, problem_summary, reproducible, problem, reported_by_employeeId, reported_date";
 
-                        $values = ") VALUES ('".$program."','".$report_type."','".$severity."',\"".$problem_summary."\",'".$reproducible."',\"".$problem."\",'".$reported_by."', '".$date."'";
+                        $values = ") VALUES ('".$program."','".$report_type."','".$severity."','".$problem_summary."','".$reproducible."','".$problem."','".$reported_by."', '".$date."'";
 
                         if ($attachment !== "")
                         {
@@ -63,11 +74,7 @@
                             print "</pre>";
 
                             $att_query = "INSERT INTO attachment (file_name) VALUES ('" . basename($attachment) . "');";
-                            $con = mysqli_connect("localhost","root");
-                            if ($con->connect_error) {
-                                die("Connection failed: " . $con->connect_error);
-                            } 
-                            mysqli_select_db($con, "bughound");
+                            
                             if (!mysqli_query($con, $att_query)) {
                                 echo "Error: " . $att_query . "<br>" . $con->error;
                             }
@@ -82,7 +89,7 @@
                         if ($suggested_fix !== "")
                         {
                             $insert .= ", suggested_fix";
-                            $values .= ",\"".$suggested_fix."\"";
+                            $values .= ",'".$suggested_fix."'";
                         }
                         if ($functional_area !== "null")
                         {
@@ -97,7 +104,7 @@
                         if ($comments !== "")
                         {
                             $insert .= ", comments";
-                            $values .= ",\"".$comments."\"";
+                            $values .= ",'".$comments."'";
                         }
                         if ($status !== "null")
                         {
@@ -145,7 +152,7 @@
                             $values .= ",'".$treat_as_deferred."'";
                         }
 
-                        $query = $insert . $values . ")";
+                        $query = $insert . $values . ");";
 
                         return $query;
                     }

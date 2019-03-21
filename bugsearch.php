@@ -119,6 +119,7 @@
                         
                         <label for="status">Status:</label>
 			<select name="status">
+                            <option value=null></option>
                             <?php
                                 $query = "SELECT TRIM(TRAILING ')' FROM TRIM(LEADING '(' FROM TRIM(LEADING 'enum' FROM column_type))) column_type FROM information_schema.columns WHERE table_name = 'bug_report' AND column_name = 'status'";
 

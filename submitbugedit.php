@@ -21,6 +21,11 @@
 					} 
                     function build_query()
                     {
+                        $con = mysqli_connect("localhost","root");
+                        if ($con->connect_error) {
+                            die("Connection failed: " . $con->connect_error);
+                        } 
+                    
                         $bug_id = $_POST['bug_id'];
                         $program = $_POST['program'];
                         $report_type = $_POST['report_type'];
@@ -45,23 +50,37 @@
                         $attachment = "";
                         $treat_as_deferred = $_POST['treat_as_deferred'];
                         
-                        $update = "UPDATE bug_report SET programId='".$program."', report_type='".$report_type."', severity='".$severity."', problem_summary=\"".$problem_summary."\", reproducible='".$reproducible."', problem=\"".$problem."\", reported_by_employeeId='".$reported_by."', reported_date='".$date."'";
+                        $problem_summary = mysqli_real_escape_string($con, $problem_summary);
+                        $problem = mysqli_real_escape_string($con, $problem);
+                        $suggested_fix = mysqli_real_escape_string($con, $suggested_fix);
+                        $comments = mysqli_real_escape_string($con, $comments);
+                        
+                        $update = "UPDATE bug_report SET programId='".$program."', report_type='".$report_type."', severity='".$severity."', problem_summary='".$problem_summary."', reproducible='".$reproducible."', problem='".$problem."', reported_by_employeeId='".$reported_by."', reported_date='".$date."'";
                         $where = " WHERE id='" . $bug_id . "';";
                         
 
-                            $update .= ", suggested_fix=\"".$suggested_fix."\"";
+                            $update .= ", suggested_fix='".$suggested_fix."'";
                             $update .= ", functional_areaId=".$functional_area."";
                             $update .= ", assigned_to_employeeId='".$assigned_to."'";
-                            $update .= ", comments=\"".$comments."\"";
+                            $update .= ", comments='".$comments."'";
                             $update .= ", status='".$status."'";
                             $update .= ", priority='".$priority."'";
                             $update .= ", resolution='".$resolution."'";
                             $update .= ", resolution_version='".$resolution_version."'";
                             $update .= ", resolved_by_employeeId='".$resolved_by."'";
-                            $update .= ", resolved_date='".$resolved_date."'";
+                            
+                            if ($resolved_date !== "")
+                            {
+                                $update .= ", resolved_date='".$resolved_date."'";
+                            }
+                            
                             $update .= ", tested_by_employeeId='".$tested_by."'";
-                            $update .= ", tested_date='".$tested_date."'";
-                        
+                            
+                            if ($tested_date !== "")
+                            {
+                                $update .= ", tested_date='".$tested_date."'";
+                            }
+                            
                             $update .= ", treat_as_deferred='".$treat_as_deferred."'";
 
                         $query = $update . $where;
