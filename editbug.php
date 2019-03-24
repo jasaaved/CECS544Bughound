@@ -453,10 +453,28 @@
 			
 			<br>
 			<br>
-			
-			<label for="attachment">Attachment: Not yet able to change | </label>
+
+                        
+                        <?php
+                            if ($attachment !== "")
+                            {
+                                echo "Current Attachment: ";
+                                $query = "SELECT * FROM attachment WHERE id=" . $attachment . ";";
+                                if ($results2 = mysqli_query($con, $query))
+                                {
+                                    $at_row = mysqli_fetch_row($results2);
+                                    $url = "/bughound/Attachments/$attachment/" . rawurlencode($at_row[1]);
+                                    echo "<a href=\"$url\" download>$at_row[1]</a>";
+                                    echo "<br>";
+                                }
+                            }
+                        
+
+                        ?>
+                        
+			<label for="attachment">Attachment: </label>
                         <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-			<input type="hidden" name="attachment" value="<?php echo attachment ?>" />
+			<input id="attachment" name="file_name" type="file" />
                         
                         <input type="hidden" value="0" name="treat_as_deferred"/>
 			<label for="treat_as_deferred">Treat as Deferred?</label>

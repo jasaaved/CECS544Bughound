@@ -196,7 +196,8 @@
                     if ($results2 = mysqli_query($con, $query))
                     {
                         $at_row = mysqli_fetch_row($results2);
-                        echo "<td>$at_row[1]</td>";
+                        $url = "/bughound/Attachments/$row[10]/" . rawurlencode($at_row[1]);
+                        echo "<td><a href=\"$url\" download>$at_row[1]</a></td>";
                     }
                     
                     echo "</tr>";

@@ -47,7 +47,7 @@
                         $resolved_date = $_POST['resolved_date'];
                         $tested_by = $_POST['tested_by'];
                         $tested_date = $_POST['tested_date'];
-                        $attachment = "";
+                        $attachment = $_FILES['file_name']['name'];
                         $treat_as_deferred = $_POST['treat_as_deferred'];
                         
                         $problem_summary = mysqli_real_escape_string($con, $problem_summary);
@@ -58,17 +58,50 @@
                         $update = "UPDATE bug_report SET programId='".$program."', report_type='".$report_type."', severity='".$severity."', problem_summary='".$problem_summary."', reproducible='".$reproducible."', problem='".$problem."', reported_by_employeeId='".$reported_by."', reported_date='".$date."'";
                         $where = " WHERE id='" . $bug_id . "';";
                         
-
-                            $update .= ", suggested_fix='".$suggested_fix."'";
-                            $update .= ", functional_areaId=".$functional_area."";
-                            $update .= ", assigned_to_employeeId='".$assigned_to."'";
-                            $update .= ", comments='".$comments."'";
-                            $update .= ", status='".$status."'";
-                            $update .= ", priority='".$priority."'";
-                            $update .= ", resolution='".$resolution."'";
-                            $update .= ", resolution_version='".$resolution_version."'";
-                            $update .= ", resolved_by_employeeId='".$resolved_by."'";
+                        $update .= ", suggested_fix='".$suggested_fix."'";
+                        $update .= ", functional_areaId=".$functional_area."";
+                        $update .= ", assigned_to_employeeId='".$assigned_to."'";
+                        $update .= ", comments='".$comments."'";
+                        $update .= ", status='".$status."'";
+                        $update .= ", priority='".$priority."'";
+                        $update .= ", resolution='".$resolution."'";
+                        $update .= ", resolution_version='".$resolution_version."'";
+                        $update .= ", resolved_by_employeeId='".$resolved_by."'";
                             
+                        if($attachment !== "")
+                        {
+                            mysqli_select_db($con, "bughound");
+                            
+                            $att_query = "INSERT INTO attachment (file_name) VALUES ('" . mysqli_real_escape_string($con, basename($attachment)) . "');";
+                            
+                            if (!mysqli_query($con, $att_query)) {
+                                echo "Error: " . $att_query . "<br>" . $con->error;
+                            }
+
+                            $att_query = "SELECT id FROM attachment WHERE file_name='" . mysqli_real_escape_string($con, basename($attachment)) . "';";
+                            $result = mysqli_query($con, $att_query);
+                            $row=mysqli_fetch_row($result);
+
+                            $update .= ", attachmentId='".$row[0]."'";
+                            
+                            define ('SITE_ROOT', realpath(dirname(__FILE__)));
+                            
+                            $uploaddir = SITE_ROOT . "/Attachments/" . $row[0] . "/";
+                            if (!is_dir($uploaddir))
+                            {
+                                mkdir($uploaddir);
+                            }
+                            
+                            $uploadfile = $uploaddir . basename($attachment);
+                            echo '<pre>';
+                            if (move_uploaded_file($_FILES['file_name']['tmp_name'], $uploadfile)) {
+                                echo "File is valid, and was successfully uploaded.\n";
+                            } else {
+                                echo "Possible file upload attack!\n";
+                            }
+                            print "</pre>";
+                        }
+                        
                             if ($resolved_date !== "")
                             {
                                 $update .= ", resolved_date='".$resolved_date."'";

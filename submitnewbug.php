@@ -59,11 +59,30 @@
 
                         $values = ") VALUES ('".$program."','".$report_type."','".$severity."','".$problem_summary."','".$reproducible."','".$problem."','".$reported_by."', '".$date."'";
 
+                        
                         if ($attachment !== "")
                         {
-                            define ('SITE_ROOT', realpath(dirname(__FILE__)));
+                            $att_query = "INSERT INTO attachment (file_name) VALUES ('" . mysqli_real_escape_string($con, basename($attachment)) . "');";
+                            
+                            if (!mysqli_query($con, $att_query)) {
+                                echo "Error: " . $att_query . "<br>" . $con->error;
+                            }
 
-                            $uploaddir = SITE_ROOT . "/Attachments/";
+                            $att_query = "SELECT id FROM attachment WHERE file_name='" . mysqli_real_escape_string($con, basename($attachment)) . "';";
+                            $result = mysqli_query($con, $att_query);
+                            $row=mysqli_fetch_row($result);
+
+                            $insert .= ", attachmentId";
+                            $values .= ",'".$row[0]."'";
+                            
+                            define ('SITE_ROOT', realpath(dirname(__FILE__)));
+                            
+                            $uploaddir = SITE_ROOT . "/Attachments/" . $row[0] . "/";
+                            if (!is_dir($uploaddir))
+                            {
+                                mkdir($uploaddir);
+                            }
+                            
                             $uploadfile = $uploaddir . basename($attachment);
                             echo '<pre>';
                             if (move_uploaded_file($_FILES['file_name']['tmp_name'], $uploadfile)) {
@@ -72,19 +91,6 @@
                                 echo "Possible file upload attack!\n";
                             }
                             print "</pre>";
-
-                            $att_query = "INSERT INTO attachment (file_name) VALUES ('" . basename($attachment) . "');";
-                            
-                            if (!mysqli_query($con, $att_query)) {
-                                echo "Error: " . $att_query . "<br>" . $con->error;
-                            }
-
-                            $att_query = "SELECT id FROM attachment WHERE file_name='" . basename($attachment) . "';";
-                            $result = mysqli_query($con, $att_query);
-                            $row=mysqli_fetch_row($result);
-
-                            $insert .= ", attachmentId";
-                            $values .= ",'".$row[0]."'";
                         }
                         if ($suggested_fix !== "")
                         {
