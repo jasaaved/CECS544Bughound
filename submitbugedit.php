@@ -25,6 +25,7 @@
                         if ($con->connect_error) {
                             die("Connection failed: " . $con->connect_error);
                         } 
+                        mysqli_select_db($con, "bughound");
                     
                         $bug_id = $_POST['bug_id'];
                         $program = $_POST['program'];
@@ -47,7 +48,12 @@
                         $resolved_date = $_POST['resolved_date'];
                         $tested_by = $_POST['tested_by'];
                         $tested_date = $_POST['tested_date'];
-                        $attachment = $_FILES['file_name']['name'];
+                        $has_attachment = $_POST['has_attachment'];
+                        $attachment = "";
+                        if (!empty($_FILES['file_name']))
+                        {
+                            $attachment = $_FILES['file_name']['name'];
+                        }
                         $treat_as_deferred = $_POST['treat_as_deferred'];
                         
                         $problem_summary = mysqli_real_escape_string($con, $problem_summary);
@@ -70,49 +76,67 @@
                             
                         if($attachment !== "")
                         {
-                            mysqli_select_db($con, "bughound");
                             
-                            $att_query = "INSERT INTO attachment (file_name) VALUES ('" . mysqli_real_escape_string($con, basename($attachment)) . "');";
                             
-                            if (!mysqli_query($con, $att_query)) {
-                                echo "Error: " . $att_query . "<br>" . $con->error;
-                            }
-
-                            $att_query = "SELECT id FROM attachment WHERE file_name='" . mysqli_real_escape_string($con, basename($attachment)) . "';";
-                            $result = mysqli_query($con, $att_query);
-                            $row=mysqli_fetch_row($result);
-
-                            $update .= ", attachmentId='".$row[0]."'";
-                            
+                            $values = "";
+                            $fileCount = count($attachment);
                             define ('SITE_ROOT', realpath(dirname(__FILE__)));
                             
-                            $uploaddir = SITE_ROOT . "/Attachments/" . $row[0] . "/";
-                            if (!is_dir($uploaddir))
+                            for ($i = 0; $i < $fileCount; $i++)
                             {
-                                mkdir($uploaddir);
+                                $att_query = "INSERT INTO attachment (file_name) VALUES ('" . mysqli_real_escape_string($con, basename($attachment[$i])) . "');";
+                                if (!mysqli_query($con, $att_query)) {
+                                    echo "Error: " . $att_query . "<br>" . $con->error;
+                                }
+                                
+                                $att_query = "SELECT id FROM attachment WHERE file_name='" . mysqli_real_escape_string($con, basename($attachment[$i])) . "';";
+                                $result = mysqli_query($con, $att_query);
+                                $row=mysqli_fetch_row($result);
+                                
+                                $values .= $row[0] . " ";
+                            
+                                $uploaddir = SITE_ROOT . "/Attachments/" . $row[0] . "/";
+                                if (!is_dir($uploaddir))
+                                {
+                                    mkdir($uploaddir);
+                                }
+
+                                $uploadfile = $uploaddir . basename($attachment[$i]);
+                                echo '<pre>';
+                                if (move_uploaded_file($_FILES['file_name']['tmp_name'][$i], $uploadfile)) {
+                                    //echo "File is valid, and was successfully uploaded.\n";
+                                } else {
+                                    echo "Possible file upload attack!\n";
+                                }
+                                print "</pre>";
                             }
                             
-                            $uploadfile = $uploaddir . basename($attachment);
-                            echo '<pre>';
-                            if (move_uploaded_file($_FILES['file_name']['tmp_name'], $uploadfile)) {
-                                echo "File is valid, and was successfully uploaded.\n";
-                            } else {
-                                echo "Possible file upload attack!\n";
+                            if ($has_attachment === "1")
+                            {
+                                $update .= ", attachmentIds=concat(attachmentIds, '";
+                                $values .= "')";
                             }
-                            print "</pre>";
+                            else
+                            {
+                                $update .= ", attachmentIds='";
+                                $values .= "'";
+                            }
+                            
+                            
+                            $update .= $values;
                         }
                         
-                            if ($resolved_date !== "")
-                            {
-                                $update .= ", resolved_date='".$resolved_date."'";
-                            }
-                            
-                            $update .= ", tested_by_employeeId='".$tested_by."'";
-                            
-                            if ($tested_date !== "")
-                            {
-                                $update .= ", tested_date='".$tested_date."'";
-                            }
+                        if ($resolved_date !== "")
+                        {
+                            $update .= ", resolved_date='".$resolved_date."'";
+                        }
+
+                        $update .= ", tested_by_employeeId='".$tested_by."'";
+
+                        if ($tested_date !== "")
+                        {
+                            $update .= ", tested_date='".$tested_date."'";
+                        }
                             
                             $update .= ", treat_as_deferred='".$treat_as_deferred."'";
 
@@ -123,7 +147,7 @@
 
 
                     $query = build_query();
-                   // echo $query;
+                    //echo $query;
 
                     $con = mysqli_connect("localhost","root");
                     if ($con->connect_error) {

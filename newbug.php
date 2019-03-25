@@ -334,7 +334,7 @@
 			
 			<label for="attachment">Attachment:</label>
                         <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-			<input id="attachment" name="file_name" type="file"/>
+                        <input id="attachment" name="file_name[]" type="file" multiple/>
 			
                         <input type="hidden" value="0" name="treat_as_deferred"/>
 			<label for="treat_as_deferred">Treat as Deferred?</label><input type="checkbox" value="1" name="treat_as_deferred">

@@ -190,15 +190,25 @@
                     echo "</tr>";
                     
                     echo "<tr>";
-                    echo "<td>Attachment: </td>";
+                    echo "<td>Attachment(s): </td>";
                     
-                    $query = "SELECT * FROM attachment WHERE id=" . $row[10] . ";";
-                    if ($results2 = mysqli_query($con, $query))
+                    echo "<td>";
+                    if ($ids = explode(" ", $row[10]))
                     {
-                        $at_row = mysqli_fetch_row($results2);
-                        $url = "/bughound/Attachments/$row[10]/" . rawurlencode($at_row[1]);
-                        echo "<td><a href=\"$url\" download>$at_row[1]</a></td>";
+                        for ($i=0; $i < count($ids); $i++)
+                        {
+                            $query = "SELECT * FROM attachment WHERE id=" . $ids[$i] . ";";
+
+                            if ($results2 = mysqli_query($con, $query))
+                            {
+                                $at_row = mysqli_fetch_row($results2);
+                                $url = "/bughound/Attachments/$ids[$i]/" . rawurlencode($at_row[1]);
+                                echo "<a href=\"$url\" download>$at_row[1]</a><br>";
+                            }
+                        }
                     }
+                    echo "</td>";
+                    
                     
                     echo "</tr>";
                     
@@ -319,7 +329,7 @@
                     echo "<input type=\"hidden\" name=\"suggested_fix\" value=\"$row[7]\">";
                     echo "<input type=\"hidden\" name=\"reported_by\" value=\"$row[8]\">";
                     echo "<input type=\"hidden\" name=\"date\"value=$row[9]>";
-                    echo "<input type=\"hidden\" name=\"attachment\" value=$row[10]>";
+                    echo "<input type=\"hidden\" name=\"attachment\" value=\"$row[10]\">";
                     echo "<input type=\"hidden\" name=\"functional_area\" value=$row[11]>";
                     echo "<input type=\"hidden\" name=\"assigned_to\" value=$row[12]>";
                     echo "<input type=\"hidden\" name=\"comments\" value=\"$row[13]\">";

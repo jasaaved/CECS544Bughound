@@ -454,27 +454,33 @@
 			<br>
 			<br>
 
+                        <input type="hidden" name="has_attachment" value="0">
                         
                         <?php
                             if ($attachment !== "")
                             {
-                                echo "Current Attachment: ";
-                                $query = "SELECT * FROM attachment WHERE id=" . $attachment . ";";
-                                if ($results2 = mysqli_query($con, $query))
+                                echo "<input type=\"hidden\" name=\"has_attachment\" value=\"1\">";
+                                echo "Current Attachment(s): <br>";
+                                if ($ids = explode(" ", $attachment))
                                 {
-                                    $at_row = mysqli_fetch_row($results2);
-                                    $url = "/bughound/Attachments/$attachment/" . rawurlencode($at_row[1]);
-                                    echo "<a href=\"$url\" download>$at_row[1]</a>";
-                                    echo "<br>";
+                                    for ($i=0; $i < count($ids); $i++)
+                                    {
+                                        $query = "SELECT * FROM attachment WHERE id=" . $ids[$i] . ";";
+
+                                        if ($results2 = mysqli_query($con, $query))
+                                        {
+                                            $at_row = mysqli_fetch_row($results2);
+                                            $url = "/bughound/Attachments/$ids[$i]/" . rawurlencode($at_row[1]);
+                                            echo "<a href=\"$url\" download>$at_row[1]</a><br>";
+                                        }
+                                    }
                                 }
                             }
-                        
-
                         ?>
                         
-			<label for="attachment">Attachment: </label>
+			<label for="attachment">Add Attachments: </label>
                         <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-			<input id="attachment" name="file_name" type="file" />
+			<input id="attachment" name="file_name[]" type="file" multiple/>
                         
                         <input type="hidden" value="0" name="treat_as_deferred"/>
 			<label for="treat_as_deferred">Treat as Deferred?</label>

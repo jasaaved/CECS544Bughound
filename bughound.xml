@@ -5,7 +5,7 @@
 - https://www.phpmyadmin.net
 -
 - Host: 127.0.0.1
-- Generation Time: Mar 14, 2019 at 02:29 PM
+- Generation Time: Mar 25, 2019 at 05:45 AM
 - Server version: 10.1.37-MariaDB
 - PHP Version: 7.3.1
 -->
@@ -21,7 +21,7 @@
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                   `file_name` text NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+                ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
             </pma:table>
             <pma:table name="bug_report">
                 CREATE TABLE `bug_report` (
@@ -35,7 +35,7 @@
                   `suggested_fix` text,
                   `reported_by_employeeId` int(11) NOT NULL,
                   `reported_date` date NOT NULL,
-                  `attachmentId` int(11) DEFAULT NULL,
+                  `attachmentIds` text,
                   `functional_areaId` int(11) DEFAULT NULL,
                   `assigned_to_employeeId` int(11) DEFAULT NULL,
                   `comments` text,
@@ -51,16 +51,14 @@
                   PRIMARY KEY (`id`),
                   KEY `programId` (`programId`),
                   KEY `reported_by_employeeId` (`reported_by_employeeId`),
-                  KEY `attachmentId` (`attachmentId`),
                   KEY `assigned_to_employeeId` (`assigned_to_employeeId`),
                   KEY `resolved_by_employeeId` (`resolved_by_employeeId`),
                   KEY `tested_by_employeeId` (`tested_by_employeeId`),
                   KEY `bug_report_ibfk_2` (`functional_areaId`),
-                  CONSTRAINT `bug_report_ibfk_1` FOREIGN KEY (`attachmentId`) REFERENCES `attachment` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
                   CONSTRAINT `bug_report_ibfk_2` FOREIGN KEY (`functional_areaId`) REFERENCES `functional_area` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
                   CONSTRAINT `bug_report_ibfk_3` FOREIGN KEY (`reported_by_employeeId`) REFERENCES `employee` (`id`) ON UPDATE NO ACTION,
                   CONSTRAINT `bug_report_ibfk_4` FOREIGN KEY (`programId`) REFERENCES `program` (`id`) ON UPDATE NO ACTION
-                ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+                ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
             </pma:table>
             <pma:table name="employee">
                 CREATE TABLE `employee` (
@@ -70,7 +68,7 @@
                   `password` text NOT NULL,
                   `user_level` int(11) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+                ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
             </pma:table>
             <pma:table name="functional_and_prog">
                 CREATE TABLE `functional_and_prog` (
@@ -79,14 +77,14 @@
                   `funcname` text NOT NULL,
                   `funcid` text NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+                ) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
             </pma:table>
             <pma:table name="functional_area">
                 CREATE TABLE `functional_area` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                   `department_name` text NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+                ) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=latin1;
             </pma:table>
             <pma:table name="program">
                 CREATE TABLE `program` (
@@ -95,7 +93,7 @@
                   `version_number` text NOT NULL,
                   `release_number` text NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+                ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
             </pma:table>
         </pma:database>
     </pma:structure_schemas>
@@ -105,149 +103,465 @@
     -->
     <database name="bughound">
         <!-- Table attachment -->
-        <table name="attachment">
-            <column name="id">1</column>
-            <column name="file_name">example.txt</column>
-        </table>
-        <table name="attachment">
-            <column name="id">2</column>
-            <column name="file_name">secondexample.txt</column>
-        </table>
         <!-- Table bug_report -->
-        <table name="bug_report">
-            <column name="id">1</column>
-            <column name="programId">1</column>
-            <column name="report_type">Coding Error</column>
-            <column name="severity">Minor</column>
-            <column name="problem_summary">test</column>
-            <column name="reproducible">1</column>
-            <column name="problem">test</column>
-            <column name="suggested_fix">test</column>
-            <column name="reported_by_employeeId">3</column>
-            <column name="reported_date">0000-00-00</column>
-            <column name="attachmentId">NULL</column>
-            <column name="functional_areaId">NULL</column>
-            <column name="assigned_to_employeeId">NULL</column>
-            <column name="comments">NULL</column>
-            <column name="status">Open</column>
-            <column name="priority">NULL</column>
-            <column name="resolution">NULL</column>
-            <column name="resolution_version">NULL</column>
-            <column name="resolved_by_employeeId">NULL</column>
-            <column name="resolved_date">NULL</column>
-            <column name="tested_by_employeeId">NULL</column>
-            <column name="tested_date">NULL</column>
-            <column name="treat_as_deferred">NULL</column>
-        </table>
-        <table name="bug_report">
-            <column name="id">3</column>
-            <column name="programId">2</column>
-            <column name="report_type">Suggestion</column>
-            <column name="severity">Serious</column>
-            <column name="problem_summary">i dont like it</column>
-            <column name="reproducible">1</column>
-            <column name="problem">its no good</column>
-            <column name="suggested_fix">make it good</column>
-            <column name="reported_by_employeeId">3</column>
-            <column name="reported_date">1993-10-12</column>
-            <column name="attachmentId">NULL</column>
-            <column name="functional_areaId">2</column>
-            <column name="assigned_to_employeeId">1</column>
-            <column name="comments">it better start working</column>
-            <column name="status">Open</column>
-            <column name="priority">Fix Immediately</column>
-            <column name="resolution">Pending</column>
-            <column name="resolution_version">Pending</column>
-            <column name="resolved_by_employeeId">3</column>
-            <column name="resolved_date">1994-10-12</column>
-            <column name="tested_by_employeeId">6</column>
-            <column name="tested_date">1995-10-12</column>
-            <column name="treat_as_deferred">1</column>
-        </table>
         <!-- Table employee -->
         <table name="employee">
-            <column name="id">1</column>
-            <column name="name">Jonathan Saavedra</column>
-            <column name="user_name">jasaaved</column>
-            <column name="password">password</column>
+            <column name="id">27</column>
+            <column name="name">Pip</column>
+            <column name="user_name">Pip</column>
+            <column name="password">pip</column>
             <column name="user_level">5</column>
         </table>
         <table name="employee">
-            <column name="id">3</column>
-            <column name="name">Christopher Gutierrez</column>
-            <column name="user_name">cgutierrez992</column>
-            <column name="password">fthch</column>
-            <column name="user_level">4</column>
+            <column name="id">28</column>
+            <column name="name">Brutus</column>
+            <column name="user_name">Brutus</column>
+            <column name="password">brutus</column>
+            <column name="user_level">1</column>
         </table>
         <table name="employee">
-            <column name="id">6</column>
-            <column name="name">Raynaldo Perez</column>
-            <column name="user_name">rperez</column>
-            <column name="password">hello</column>
-            <column name="user_level">6</column>
-        </table>
-        <table name="employee">
-            <column name="id">7</column>
-            <column name="name">hllo there</column>
-            <column name="user_name">hi</column>
-            <column name="password">dyjfyt</column>
+            <column name="id">29</column>
+            <column name="name">Timmy</column>
+            <column name="user_name">timmy!</column>
+            <column name="password">timmy</column>
             <column name="user_level">5</column>
         </table>
         <table name="employee">
-            <column name="id">8</column>
-            <column name="name">david cowboy</column>
-            <column name="user_name">cdavid</column>
-            <column name="password">adfjak</column>
-            <column name="user_level">9</column>
+            <column name="id">30</column>
+            <column name="name">Jorge</column>
+            <column name="user_name">jorge</column>
+            <column name="password">jorge</column>
+            <column name="user_level">5</column>
+        </table>
+        <table name="employee">
+            <column name="id">31</column>
+            <column name="name">Hanna</column>
+            <column name="user_name">smith</column>
+            <column name="password">smith</column>
+            <column name="user_level">3</column>
+        </table>
+        <table name="employee">
+            <column name="id">32</column>
+            <column name="name">Johann Gomblepuddy</column>
+            <column name="user_name">johanng</column>
+            <column name="password">johanng</column>
+            <column name="user_level">1</column>
+        </table>
+        <table name="employee">
+            <column name="id">33</column>
+            <column name="name">Louis XIV</column>
+            <column name="user_name">leroisoleil</column>
+            <column name="password">leroisoleil</column>
+            <column name="user_level">3</column>
+        </table>
+        <table name="employee">
+            <column name="id">34</column>
+            <column name="name">Prakish</column>
+            <column name="user_name">smithp</column>
+            <column name="password">smithp</column>
+            <column name="user_level">3</column>
+        </table>
+        <table name="employee">
+            <column name="id">35</column>
+            <column name="name">Brenda</column>
+            <column name="user_name">jonesbrenda</column>
+            <column name="password">jonesbrenda</column>
+            <column name="user_level">1</column>
         </table>
         <!-- Table functional_and_prog -->
         <table name="functional_and_prog">
-            <column name="id">1</column>
-            <column name="progid">1</column>
-            <column name="funcname">Marketing</column>
-            <column name="funcid">1</column>
+            <column name="id">44</column>
+            <column name="progid">15</column>
+            <column name="funcname">Menu</column>
+            <column name="funcid">45</column>
         </table>
         <table name="functional_and_prog">
-            <column name="id">2</column>
-            <column name="progid">1</column>
-            <column name="funcname">Research and Development</column>
-            <column name="funcid">2</column>
+            <column name="id">45</column>
+            <column name="progid">15</column>
+            <column name="funcname">Launcher</column>
+            <column name="funcid">46</column>
         </table>
         <table name="functional_and_prog">
-            <column name="id">3</column>
-            <column name="progid">1</column>
-            <column name="funcname">Information Technology (IT)</column>
-            <column name="funcid">4</column>
+            <column name="id">46</column>
+            <column name="progid">15</column>
+            <column name="funcname">Riften</column>
+            <column name="funcid">47</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">47</column>
+            <column name="progid">15</column>
+            <column name="funcname">Falkreath</column>
+            <column name="funcid">48</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">48</column>
+            <column name="progid">16</column>
+            <column name="funcname">Logon</column>
+            <column name="funcid">49</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">49</column>
+            <column name="progid">16</column>
+            <column name="funcname">Start</column>
+            <column name="funcid">50</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">50</column>
+            <column name="progid">16</column>
+            <column name="funcname">DB Maintenance</column>
+            <column name="funcid">51</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">51</column>
+            <column name="progid">16</column>
+            <column name="funcname">Search</column>
+            <column name="funcid">52</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">52</column>
+            <column name="progid">16</column>
+            <column name="funcname">Insert New</column>
+            <column name="funcid">53</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">53</column>
+            <column name="progid">16</column>
+            <column name="funcname">Search Results</column>
+            <column name="funcid">54</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">54</column>
+            <column name="progid">16</column>
+            <column name="funcname">Add Edit Areas</column>
+            <column name="funcid">55</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">55</column>
+            <column name="progid">16</column>
+            <column name="funcname">Add Employees</column>
+            <column name="funcid">56</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">56</column>
+            <column name="progid">16</column>
+            <column name="funcname">Add Programs</column>
+            <column name="funcid">57</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">57</column>
+            <column name="progid">16</column>
+            <column name="funcname">View Bugs</column>
+            <column name="funcid">58</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">58</column>
+            <column name="progid">17</column>
+            <column name="funcname">Lexer</column>
+            <column name="funcid">59</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">59</column>
+            <column name="progid">17</column>
+            <column name="funcname">Parser</column>
+            <column name="funcid">60</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">60</column>
+            <column name="progid">17</column>
+            <column name="funcname">Code Generator</column>
+            <column name="funcid">61</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">61</column>
+            <column name="progid">17</column>
+            <column name="funcname">Linker</column>
+            <column name="funcid">62</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">63</column>
+            <column name="progid">18</column>
+            <column name="funcname">Lexer</column>
+            <column name="funcid">59</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">64</column>
+            <column name="progid">18</column>
+            <column name="funcname">Parser</column>
+            <column name="funcid">60</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">65</column>
+            <column name="progid">18</column>
+            <column name="funcname">Code Generator</column>
+            <column name="funcid">61</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">66</column>
+            <column name="progid">18</column>
+            <column name="funcname">Linker</column>
+            <column name="funcid">62</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">67</column>
+            <column name="progid">19</column>
+            <column name="funcname">Lexer</column>
+            <column name="funcid">59</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">68</column>
+            <column name="progid">19</column>
+            <column name="funcname">Parser</column>
+            <column name="funcid">60</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">69</column>
+            <column name="progid">19</column>
+            <column name="funcname">Code Generator</column>
+            <column name="funcid">61</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">70</column>
+            <column name="progid">19</column>
+            <column name="funcname">Linker</column>
+            <column name="funcid">62</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">71</column>
+            <column name="progid">19</column>
+            <column name="funcname">IDE</column>
+            <column name="funcid">63</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">72</column>
+            <column name="progid">20</column>
+            <column name="funcname">Lexer</column>
+            <column name="funcid">59</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">73</column>
+            <column name="progid">20</column>
+            <column name="funcname">Parser</column>
+            <column name="funcid">60</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">74</column>
+            <column name="progid">20</column>
+            <column name="funcname">Code Generator</column>
+            <column name="funcid">61</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">75</column>
+            <column name="progid">20</column>
+            <column name="funcname">Linker</column>
+            <column name="funcid">62</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">76</column>
+            <column name="progid">20</column>
+            <column name="funcname">IDE</column>
+            <column name="funcid">63</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">77</column>
+            <column name="progid">21</column>
+            <column name="funcname">Editor</column>
+            <column name="funcid">64</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">78</column>
+            <column name="progid">21</column>
+            <column name="funcname">Spell Checker</column>
+            <column name="funcid">65</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">79</column>
+            <column name="progid">21</column>
+            <column name="funcname">Dynodraw</column>
+            <column name="funcid">66</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">80</column>
+            <column name="progid">21</column>
+            <column name="funcname">Formulator</column>
+            <column name="funcid">67</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">81</column>
+            <column name="progid">22</column>
+            <column name="funcname">Menu</column>
+            <column name="funcid">45</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">82</column>
+            <column name="progid">22</column>
+            <column name="funcname">Router</column>
+            <column name="funcid">68</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">83</column>
+            <column name="progid">22</column>
+            <column name="funcname">Database</column>
+            <column name="funcid">69</column>
+        </table>
+        <table name="functional_and_prog">
+            <column name="id">84</column>
+            <column name="progid">22</column>
+            <column name="funcname">GUI</column>
+            <column name="funcid">70</column>
         </table>
         <!-- Table functional_area -->
         <table name="functional_area">
-            <column name="id">1</column>
-            <column name="department_name">Marketing</column>
+            <column name="id">45</column>
+            <column name="department_name">Menu</column>
         </table>
         <table name="functional_area">
-            <column name="id">2</column>
-            <column name="department_name">Research and Development</column>
+            <column name="id">46</column>
+            <column name="department_name">Launcher</column>
         </table>
         <table name="functional_area">
-            <column name="id">3</column>
-            <column name="department_name">Accounting</column>
+            <column name="id">47</column>
+            <column name="department_name">Riften</column>
         </table>
         <table name="functional_area">
-            <column name="id">4</column>
-            <column name="department_name">Information Technology (IT)</column>
+            <column name="id">48</column>
+            <column name="department_name">Falkreath</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">49</column>
+            <column name="department_name">Logon</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">50</column>
+            <column name="department_name">Start</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">51</column>
+            <column name="department_name">DB Maintenance</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">52</column>
+            <column name="department_name">Search</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">53</column>
+            <column name="department_name">Insert New</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">54</column>
+            <column name="department_name">Search Results</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">55</column>
+            <column name="department_name">Add Edit Areas</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">56</column>
+            <column name="department_name">Add Employees</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">57</column>
+            <column name="department_name">Add Programs</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">58</column>
+            <column name="department_name">View Bugs</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">59</column>
+            <column name="department_name">Lexer</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">60</column>
+            <column name="department_name">Parser</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">61</column>
+            <column name="department_name">Code Generator</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">62</column>
+            <column name="department_name">Linker</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">63</column>
+            <column name="department_name">IDE</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">64</column>
+            <column name="department_name">Editor</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">65</column>
+            <column name="department_name">Spell Checker</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">66</column>
+            <column name="department_name">Dynodraw</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">67</column>
+            <column name="department_name">Formulator</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">68</column>
+            <column name="department_name">Router</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">69</column>
+            <column name="department_name">Database</column>
+        </table>
+        <table name="functional_area">
+            <column name="id">70</column>
+            <column name="department_name">GUI</column>
         </table>
         <!-- Table program -->
         <table name="program">
-            <column name="id">1</column>
-            <column name="name">Instagram</column>
-            <column name="version_number">1.0</column>
-            <column name="release_number">1.0</column>
+            <column name="id">15</column>
+            <column name="name">Skyrim</column>
+            <column name="version_number">1</column>
+            <column name="release_number">1</column>
         </table>
         <table name="program">
-            <column name="id">2</column>
-            <column name="name">Facebook</column>
-            <column name="version_number">2.0.1</column>
-            <column name="release_number">2.0.0</column>
+            <column name="id">16</column>
+            <column name="name">Bughound</column>
+            <column name="version_number">1</column>
+            <column name="release_number">1</column>
+        </table>
+        <table name="program">
+            <column name="id">17</column>
+            <column name="name">Visual Ada95</column>
+            <column name="version_number">1</column>
+            <column name="release_number">1</column>
+        </table>
+        <table name="program">
+            <column name="id">18</column>
+            <column name="name">Visual Ada95</column>
+            <column name="version_number">2</column>
+            <column name="release_number">1</column>
+        </table>
+        <table name="program">
+            <column name="id">19</column>
+            <column name="name">Visual Ada95</column>
+            <column name="version_number">1</column>
+            <column name="release_number">2</column>
+        </table>
+        <table name="program">
+            <column name="id">20</column>
+            <column name="name">Pascal Coder</column>
+            <column name="version_number">1</column>
+            <column name="release_number">1</column>
+        </table>
+        <table name="program">
+            <column name="id">21</column>
+            <column name="name">Word Writer 2019</column>
+            <column name="version_number">1</column>
+            <column name="release_number">1</column>
+        </table>
+        <table name="program">
+            <column name="id">22</column>
+            <column name="name">MapStar 7</column>
+            <column name="version_number">1</column>
+            <column name="release_number">7</column>
         </table>
     </database>
 </pma_xml_export>
