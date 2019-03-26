@@ -50,7 +50,7 @@
                         $tested_date = $_POST['tested_date'];
                         $has_attachment = $_POST['has_attachment'];
                         $attachment = "";
-                        if (!empty($_FILES['file_name']))
+                        if (!empty($_FILES['file_name']['name'][0]))
                         {
                             $attachment = $_FILES['file_name']['name'];
                         }
