@@ -529,10 +529,66 @@
 				}
 				
 				if(count($BArray)){
-					createXMLfileP($BArray);
+					createXMLfileB($BArray);
 				}
 
 			}
+			else if ($database_number == 1 && $format == 2){
+				$query = "SELECT * FROM bug_report";
+			    $result=mysqli_query($con, $query);
+				$BArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($BArray, $row);
+					
+				}
+				
+				$query = "SELECT * FROM program";
+			    $result=mysqli_query($con, $query);
+				$PArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($PArray, $row);
+					
+				}
+				
+				$query = "SELECT * FROM employee";
+			    $result=mysqli_query($con, $query);
+				$employeeArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($employeeArray, $row);
+					
+				}
+				
+				$query = "SELECT * FROM functional_and_prog";
+			    $result=mysqli_query($con, $query);
+				$FPArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($FPArray, $row);
+					
+				}
+				
+				$query = "SELECT * FROM functional_area";
+			    $result=mysqli_query($con, $query);
+				$FAArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($FAArray, $row);
+					
+				}
+				
+				
+				$query = "SELECT * FROM attachment";
+			    $result=mysqli_query($con, $query);
+				$attachmentsArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($attachmentsArray, $row);
+					
+				}
+				
+				createXMLfileAll($BArray, $FAArray, $FPArray, $employeeArray, $attachmentsArray, $PArray);
+			
+
+			}
+
+
 		
 			
 			
@@ -601,7 +657,7 @@
 				 
 				 $FPId        =  $FPArray[$i]['id'];  
 				 $FPProgId      =  $FPArray[$i]['progid'];
-				 $FPFuncName =  $FPrray[$i]['funcname'];
+				 $FPFuncName =  $FPArray[$i]['funcname'];
 				 $FPFuncId = $FPArray[$i]['funcid'];
 
 				 $FP = $dom->createElement('FP');
@@ -663,6 +719,240 @@
 				}
 			   $dom->appendChild($root); 
 			   $dom->save($filePath); 
+		}
+
+		function createXMLfileB($BArray){
+  
+			   $filePath = 'BugReports.xml';
+			   $dom     = new DOMDocument('1.0', 'utf-8'); 
+			   $root      = $dom->createElement('bug_report'); 
+			   for($i=0; $i<count($BArray); $i++){
+				 
+				 $bugId        =  $BArray[$i]['id'];  
+				 $bugprogramid      =  $BArray[$i]['programId'];
+				 $bugreporttype =  $BArray[$i]['report_type'];
+				 $bugseverity = $BArray[$i]['severity'];
+				 $bugproblemsummary= $BArray[$i]['problem_summary'];
+				 $bugreproducible        =  $BArray[$i]['reproducible'];  
+				 $bugsugestedfix      =  $BArray[$i]['suggested_fix'];
+				 $bugreportedbyemployee =  $BArray[$i]['reported_by_employeeId'];
+				 $bugreporteddate = $BArray[$i]['reported_date'];
+				 $bugattachmentId= $BArray[$i]['attachmentId'];
+				 $bugfunctionalareaId       =  $BArray[$i]['functional_areaId'];  
+				 $bugassigned_to_employeeId      =  $BArray[$i]['assigned_to_employeeId'];
+				 $bugcomments =  $BArray[$i]['comments'];
+				 $bugstatus = $BArray[$i]['status'];
+				 $bugpriority= $BArray[$i]['priority'];
+				 $bugresolution        =  $BArray[$i]['resolution'];  
+				 $bugresolutionversion     =  $BArray[$i]['resolution_version'];
+				 $bugresolvedbyemployeeId =  $BArray[$i]['resolved_by_employeeId'];
+				 $bugresolveddate = $BArray[$i]['resolved_date'];
+				 $bugtestedbyemployeeId= $BArray[$i]['tested_by_employeeId'];
+				 $bugtesteddate       =  $BArray[$i]['tested_date'];  
+				 $bugtreatasdeferred     =  $BArray[$i]['treat_as_deferred'];
+	
+				 $bugs = $dom->createElement('bug_report');
+				 $bugs->setAttribute('id', $bugId);
+				 $progId     = $dom->createElement('programId', $bugprogramid); 
+				 $bugs->appendChild($progId); 
+				 $report_type = $dom->createElement('report_type', $bugreporttype);
+				 $bugs->appendChild($report_type);
+				 $severity = $dom->createElement('severity', $bugseverity); 
+				 $bugs->appendChild($severity);
+				 $problem_summary = $dom->createElement('problem_summary', $bugproblemsummary);
+				 $bugs->appendChild($problem_summary);
+				 $reproducible = $dom->createElement('reproducible', $bugreproducible);
+				 $bugs->appendChild($reproducible);
+				 $suggested_fix = $dom->createElement('suggested_fix', $bugsugestedfix);
+				 $bugs->appendChild($suggested_fix);
+				 $reported_by_employeeId = $dom->createElement('reported_by_employeeId', $bugreportedbyemployee);
+				 $bugs->appendChild($reported_by_employeeId);
+				 $reported_date = $dom->createElement('reported_date', $bugreporteddate);
+				 $bugs->appendChild($reported_date);
+				 $attachmentId= $dom->createElement('attachmentId', $bugattachmentId);
+				 $bugs->appendChild($attachmentId);
+				 $functional_areaId = $dom->createElement('functional_areaId', $bugfunctionalareaId);
+				 $bugs->appendChild($functional_areaId);
+				 $assigned_to_employeeId = $dom->createElement('assigned_to_employeeId', $bugassigned_to_employeeId);
+				 $bugs->appendChild($assigned_to_employeeId);
+				 $comments = $dom->createElement('comments', $bugcomments);
+				 $bugs->appendChild($comments);
+				 $status = $dom->createElement('status', $bugstatus);
+				 $bugs->appendChild($status);
+				 $priority = $dom->createElement('priority', $bugpriority);
+				 $bugs->appendChild($priority);
+				 $resolution = $dom->createElement('resolution', $bugresolution);
+				 $bugs->appendChild($resolution);
+				 $resolution_version = $dom->createElement('resolution_version', $bugresolutionversion);
+				 $bugs->appendChild($resolution_version);
+				 $resolved_by_employeeId = $dom->createElement('resolved_by_employeeId', $bugresolvedbyemployeeId);
+				 $bugs->appendChild($resolved_by_employeeId);
+				 $resolved_date = $dom->createElement('resolved_date', $bugresolveddate);
+				 $bugs->appendChild($resolved_date);
+				 $tested_by_employeeId = $dom->createElement('tested_by_employeeId', $bugtestedbyemployeeId);
+				 $bugs->appendChild($tested_by_employeeId);
+				 $tested_date = $dom->createElement('tested_date', $bugtesteddate);
+				 $bugs->appendChild($tested_date);
+				 $treat_as_deferred = $dom->createElement('treat_as_deferred', $bugtreatasdeferred);
+				 $bugs->appendChild($treat_as_deferred);
+				 $root->appendChild($bugs);
+				}
+		   $dom->appendChild($root); 
+		   $dom->save($filePath); 
+		}
+
+		function createXMLfileAll($BArray, $FAArray, $FPArray, $employeeArray, $attachmentsArray, $PArray){
+  
+			   $filePath = 'all.xml';
+			   echo 5;
+			   $dom     = new DOMDocument('1.0', 'utf-8'); 
+			   $root      = $dom->createElement('bug_report'); 
+			   for($i=0; $i<count($BArray); $i++){
+				 
+				 $bugId        =  $BArray[$i]['id'];  
+				 $bugprogramid      =  $BArray[$i]['programId'];
+				 $bugreporttype =  $BArray[$i]['report_type'];
+				 $bugseverity = $BArray[$i]['severity'];
+				 $bugproblemsummary= $BArray[$i]['problem_summary'];
+				 $bugreproducible        =  $BArray[$i]['reproducible'];  
+				 $bugsugestedfix      =  $BArray[$i]['suggested_fix'];
+				 $bugreportedbyemployee =  $BArray[$i]['reported_by_employeeId'];
+				 $bugreporteddate = $BArray[$i]['reported_date'];
+				 $bugattachmentId= $BArray[$i]['attachmentId'];
+				 $bugfunctionalareaId       =  $BArray[$i]['functional_areaId'];  
+				 $bugassigned_to_employeeId      =  $BArray[$i]['assigned_to_employeeId'];
+				 $bugcomments =  $BArray[$i]['comments'];
+				 $bugstatus = $BArray[$i]['status'];
+				 $bugpriority= $BArray[$i]['priority'];
+				 $bugresolution        =  $BArray[$i]['resolution'];  
+				 $bugresolutionversion     =  $BArray[$i]['resolution_version'];
+				 $bugresolvedbyemployeeId =  $BArray[$i]['resolved_by_employeeId'];
+				 $bugresolveddate = $BArray[$i]['resolved_date'];
+				 $bugtestedbyemployeeId= $BArray[$i]['tested_by_employeeId'];
+				 $bugtesteddate       =  $BArray[$i]['tested_date'];  
+				 $bugtreatasdeferred     =  $BArray[$i]['treat_as_deferred'];
+	
+				 $bugs = $dom->createElement('bug_report');
+				 $bugs->setAttribute('id', $bugId);
+				 $progId     = $dom->createElement('programId', $bugprogramid); 
+				 $bugs->appendChild($progId); 
+				 $report_type = $dom->createElement('report_type', $bugreporttype);
+				 $bugs->appendChild($report_type);
+				 $severity = $dom->createElement('severity', $bugseverity); 
+				 $bugs->appendChild($severity);
+				 $problem_summary = $dom->createElement('problem_summary', $bugproblemsummary);
+				 $bugs->appendChild($problem_summary);
+				 $reproducible = $dom->createElement('reproducible', $bugreproducible);
+				 $bugs->appendChild($reproducible);
+				 $suggested_fix = $dom->createElement('suggested_fix', $bugsugestedfix);
+				 $bugs->appendChild($suggested_fix);
+				 $reported_by_employeeId = $dom->createElement('reported_by_employeeId', $bugreportedbyemployee);
+				 $bugs->appendChild($reported_by_employeeId);
+				 $reported_date = $dom->createElement('reported_date', $bugreporteddate);
+				 $bugs->appendChild($reported_date);
+				 $attachmentId= $dom->createElement('attachmentId', $bugattachmentId);
+				 $bugs->appendChild($attachmentId);
+				 $functional_areaId = $dom->createElement('functional_areaId', $bugfunctionalareaId);
+				 $bugs->appendChild($functional_areaId);
+				 $assigned_to_employeeId = $dom->createElement('assigned_to_employeeId', $bugassigned_to_employeeId);
+				 $bugs->appendChild($assigned_to_employeeId);
+				 $comments = $dom->createElement('comments', $bugcomments);
+				 $bugs->appendChild($comments);
+				 $status = $dom->createElement('status', $bugstatus);
+				 $bugs->appendChild($status);
+				 $priority = $dom->createElement('priority', $bugpriority);
+				 $bugs->appendChild($priority);
+				 $resolution = $dom->createElement('resolution', $bugresolution);
+				 $bugs->appendChild($resolution);
+				 $resolution_version = $dom->createElement('resolution_version', $bugresolutionversion);
+				 $bugs->appendChild($resolution_version);
+				 $resolved_by_employeeId = $dom->createElement('resolved_by_employeeId', $bugresolvedbyemployeeId);
+				 $bugs->appendChild($resolved_by_employeeId);
+				 $resolved_date = $dom->createElement('resolved_date', $bugresolveddate);
+				 $bugs->appendChild($resolved_date);
+				 $tested_by_employeeId = $dom->createElement('tested_by_employeeId', $bugtestedbyemployeeId);
+				 $bugs->appendChild($tested_by_employeeId);
+				 $tested_date = $dom->createElement('tested_date', $bugtesteddate);
+				 $bugs->appendChild($tested_date);
+				 $treat_as_deferred = $dom->createElement('treat_as_deferred', $bugtreatasdeferred);
+				 $bugs->appendChild($treat_as_deferred);
+				 $root->appendChild($bugs);
+				}
+		   $dom->appendChild($root);
+			   $root      = $dom->createElement('program'); 
+			   for($i=0; $i<count($PArray); $i++){
+				 
+				 $PId        =  $PArray[$i]['id'];  
+				 $PName      =  $PArray[$i]['name'];
+				 $PVersionNumber = $PArray[$i]['version_number'];
+				 $PReleaseNumber = $PArray[$i]['release_number'];
+
+				 $P = $dom->createElement('P');
+				 $P->setAttribute('id', $PId);
+				 $Name = $dom->createElement('name', $PName);
+				 $P->appendChild($Name); 
+				 $VersionNumber = $dom->createElement('version_number', $PVersionNumber);
+				 $P->appendChild($VersionNumber);
+				 $ReleaseNumber = $dom->createElement('release_number', $PReleaseNumber); 
+				 $P->appendChild($ReleaseNumber);
+				 $root->appendChild($P);
+				}
+			   $dom->appendChild($root);
+			   $root      = $dom->createElement('functional_area'); 
+			   for($i=0; $i<count($FAArray); $i++){
+				 
+				 $FAId        =  $FAArray[$i]['id'];  
+				 $FADepartmentName      =  $FAArray[$i]['department_name'];
+
+
+				 $FA = $dom->createElement('FA');
+				 $FA->setAttribute('id', $FAId);
+				 $DepartmentName = $dom->createElement('department_name', $FADepartmentName);
+				 $FA->appendChild($DepartmentName); 
+				 $root->appendChild($FA);
+				}
+			   $dom->appendChild($root); 
+			   $root      = $dom->createElement('functional_and_prog'); 
+			   for($i=0; $i<count($FPArray); $i++){
+				 
+				 $FPId        =  $FPArray[$i]['id'];  
+				 $FPProgId      =  $FPArray[$i]['progid'];
+				 $FPFuncName =  $FPArray[$i]['funcname'];
+				 $FPFuncId = $FPArray[$i]['funcid'];
+
+				 $FP = $dom->createElement('FP');
+				 $FP->setAttribute('id', $FPId);
+				 $ProgId = $dom->createElement('progid', $FPProgId);
+				 $FP->appendChild($ProgId); 
+				 $FuncName = $dom->createElement('funcname', $FPFuncName);
+				 $FP->appendChild($FuncName);
+				 $FuncId = $dom->createElement('funcid', $FPFuncId); 
+				 $FP->appendChild($FuncId);
+				 $root->appendChild($FP);
+				}
+			   $dom->appendChild($root); 
+			   $root      = $dom->createElement('employee'); 
+			   for($i=0; $i<count($employeeArray); $i++){
+				 
+				 $employeeId        =  $employeeArray[$i]['id'];  
+				 $employeeName      =  $employeeArray[$i]['name'];
+				 $employeeUserName =  $employeeArray[$i]['user_name'];
+				 $employeePassword = $employeeArray[$i]['password'];
+				 $employeelevel = $employeeArray[$i]['user_level'];
+				 $employee = $dom->createElement('employee');
+				 $employee->setAttribute('id', $employeeId);
+				 $name     = $dom->createElement('name', $employeeName); 
+				 $employee->appendChild($name); 
+				 $username = $dom->createElement('user_name', $employeeUserName);
+				 $employee->appendChild($username);
+				 $password = $dom->createElement('password', $employeePassword); 
+				 $employee->appendChild($password);
+				 $level = $dom->createElement('user_level', $employeelevel);
+				 $employee->appendChild($password);
+				 $root->appendChild($employee);
+				}
+		   $dom->appendChild($root);			   
+		   $dom->save($filePath); 
 		}		
 		
          echo $_POST["method"]();
