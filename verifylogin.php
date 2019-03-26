@@ -331,7 +331,7 @@
 				while($row=mysqli_fetch_array($result)){
 					$ID = $row[0];
 					$name = $row[1];
-					$functions = "Attachment ID: $ID Attachment Name: $name\n";
+					$functions = "Attachment ID: $ID File Name: $name\n";
 					fwrite($fh, $functions);
 				}
 				fwrite($fh, "\n");
@@ -436,7 +436,7 @@
 				while($row=mysqli_fetch_array($result)){
 					$ID = $row[0];
 					$name = $row[1];
-					$functions = "Attachment ID: $ID Attachment Name: $name\n";
+					$functions = "Attachment ID: $ID File Name: $name\n";
 					fwrite($fh, $functions);
 				}
 				fwrite($fh, "\n");
@@ -599,18 +599,17 @@
 		}
 
 		function createXMLfileatt($attachmentsArray){
-  
-			   $filePath = 'attaments.xml';
+			   $filePath = 'attachments.xml';
 			   $dom     = new DOMDocument('1.0', 'utf-8'); 
 			   $root      = $dom->createElement('attachments'); 
 			   for($i=0; $i<count($attachmentsArray); $i++){
 				 
 				 $attachmentsId        =  $attachmentsArray[$i]['id'];  
-				 $attachmentName      =   $attachmentsArray[$i]['name'];
+				 $attachmentName      =   $attachmentsArray[$i]['file_name'];
 				   
 				 $attachment = $dom->createElement('attachment');
 				 $attachment->setAttribute('id', $attachmentsId);
-				 $name     = $dom->createElement('name', $attachmentName); 
+				 $name     = $dom->createElement('file_name', $attachmentName); 
 				 $attachment->appendChild($name); 
  
 				 
@@ -804,7 +803,6 @@
 		function createXMLfileAll($BArray, $FAArray, $FPArray, $employeeArray, $attachmentsArray, $PArray){
   
 			   $filePath = 'all.xml';
-			   echo 5;
 			   $dom     = new DOMDocument('1.0', 'utf-8'); 
 			   $root      = $dom->createElement('bug_report'); 
 			   for($i=0; $i<count($BArray); $i++){
@@ -951,7 +949,22 @@
 				 $employee->appendChild($password);
 				 $root->appendChild($employee);
 				}
-		   $dom->appendChild($root);			   
+		   $dom->appendChild($root);	
+			$root  = $dom->createElement('attachments'); 
+			   for($i=0; $i<count($attachmentsArray); $i++){
+				 
+				 $attachmentsId        =  $attachmentsArray[$i]['id'];  
+				 $attachmentName      =   $attachmentsArray[$i]['file_name'];
+				   
+				 $attachment = $dom->createElement('attachment');
+				 $attachment->setAttribute('id', $attachmentsId);
+				 $name     = $dom->createElement('file_name', $attachmentName); 
+				 $attachment->appendChild($name); 
+ 
+				 
+				 $root->appendChild($attachment);
+			   }
+			   $dom->appendChild($root);		   
 		   $dom->save($filePath); 
 		}		
 		
