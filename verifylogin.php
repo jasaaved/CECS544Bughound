@@ -504,6 +504,38 @@
 				}
 
 			}
+
+			else if ($database_number == 3 && $format == 2){
+				$query = "SELECT * FROM program";
+			    $result=mysqli_query($con, $query);
+				$PArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($PArray, $row);
+					
+				}
+				
+				if(count($PArray)){
+					createXMLfileP($PArray);
+				}
+
+			}
+			else if ($database_number == 2 && $format == 2){
+				$query = "SELECT * FROM bug_report";
+			    $result=mysqli_query($con, $query);
+				$BArray = array();
+				while($row=$result->fetch_assoc()){
+					array_push($BArray, $row);
+					
+				}
+				
+				if(count($BArray)){
+					createXMLfileP($BArray);
+				}
+
+			}
+		
+			
+			
 			
 			
 				
@@ -536,7 +568,7 @@
   
 			   $filePath = 'employee.xml';
 			   $dom     = new DOMDocument('1.0', 'utf-8'); 
-			   $root      = $dom->createElement('attachments'); 
+			   $root      = $dom->createElement('employee'); 
 			   for($i=0; $i<count($employeeArray); $i++){
 				 
 				 $employeeId        =  $employeeArray[$i]['id'];  
@@ -564,7 +596,7 @@
   
 			   $filePath = 'FunctionalAreasinPrograms.xml';
 			   $dom     = new DOMDocument('1.0', 'utf-8'); 
-			   $root      = $dom->createElement('attachments'); 
+			   $root      = $dom->createElement('functional_and_prog'); 
 			   for($i=0; $i<count($FPArray); $i++){
 				 
 				 $FPId        =  $FPArray[$i]['id'];  
@@ -590,7 +622,7 @@
   
 			   $filePath = 'FunctionalAreas.xml';
 			   $dom     = new DOMDocument('1.0', 'utf-8'); 
-			   $root      = $dom->createElement('attachments'); 
+			   $root      = $dom->createElement('functional_area'); 
 			   for($i=0; $i<count($FAArray); $i++){
 				 
 				 $FAId        =  $FAArray[$i]['id'];  
@@ -605,7 +637,34 @@
 				}
 			   $dom->appendChild($root); 
 			   $dom->save($filePath); 
+		}
+
+		function createXMLfileP($PArray){
+  
+			   $filePath = 'Programs.xml';
+			   $dom     = new DOMDocument('1.0', 'utf-8'); 
+			   $root      = $dom->createElement('program'); 
+			   for($i=0; $i<count($PArray); $i++){
+				 
+				 $PId        =  $PArray[$i]['id'];  
+				 $PName      =  $PArray[$i]['name'];
+				 $PVersionNumber = $PArray[$i]['version_number'];
+				 $PReleaseNumber = $PArray[$i]['release_number'];
+
+				 $P = $dom->createElement('P');
+				 $P->setAttribute('id', $PId);
+				 $Name = $dom->createElement('name', $PName);
+				 $P->appendChild($Name); 
+				 $VersionNumber = $dom->createElement('version_number', $PVersionNumber);
+				 $P->appendChild($VersionNumber);
+				 $ReleaseNumber = $dom->createElement('release_number', $PReleaseNumber); 
+				 $P->appendChild($ReleaseNumber);
+				 $root->appendChild($P);
+				}
+			   $dom->appendChild($root); 
+			   $dom->save($filePath); 
 		}		
 		
          echo $_POST["method"]();
+
 ?>
