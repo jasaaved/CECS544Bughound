@@ -48,7 +48,7 @@
                         $tested_by = $_POST['tested_by'];
                         $tested_date = $_POST['tested_date'];
                         $attachment = "";
-                        if (!empty($_FILES['file_name']))
+                        if (!empty($_FILES['file_name']['name'][0]))
                         {
                             $attachment = $_FILES['file_name']['name'];
                         }
@@ -93,7 +93,7 @@
                                 $uploadfile = $uploaddir . basename($attachment[$i]);
                                 echo '<pre>';
                                 if (move_uploaded_file($_FILES['file_name']['tmp_name'][$i], $uploadfile)) {
-                                    echo "File is valid, and was successfully uploaded.\n";
+                                    //echo "File is valid, and was successfully uploaded.\n";
                                 } else {
                                     echo "Possible file upload attack!\n";
                                 }
