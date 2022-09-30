@@ -33,4 +33,4 @@ Then, complete the following steps:
 ![picture alt](https://i.imgur.com/caHPp8O.png "Bug Search page")
 ![picture alt](https://i.imgur.com/rYKUafa.png "New Bug Report entry page")
 
-### Thank you for viewing my project. Please email me with any inquiries at christopher.gutie@gmail.com
+### Thank you for viewing my project. Please email any inquiries to jsaaved89@gmail.com or christopher.gutie@gmail.com
